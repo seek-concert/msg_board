@@ -1,14 +1,13 @@
 <?php
 // +----------------------------------------------------------------------
-// | ThinkPHP [ WE CAN DO IT JUST THINK ]
+// | p7ing.com [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006~2018 http://thinkphp.cn All rights reserved.
-// +----------------------------------------------------------------------
-// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
+// | Copyright (c) 2019-2029 http://p7ing.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Author: Leimon <leimon1314@gmail.com>
 // +----------------------------------------------------------------------
 
+// [ 后台登录 ]
 namespace app\message_admin\controller;
 
 use think\Cache;
