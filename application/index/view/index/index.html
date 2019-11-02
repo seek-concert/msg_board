@@ -1,0 +1,547 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>对我说句真心话吧。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" /><script type="text/javascript" src="//res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <script type="text/javascript">
+        WXCONFIG = {"debug": false, "appId": "wxc56c6cb69c9a75c4xxx", "timestamp": 1572676673, "nonceStr": "b9fY0uI75ttRFjb2", "signature": "7815258508b79e613c3ac295101bd8bbbf73ac8e", "jsApiList": ["onMenuShareTimeline", "updateAppMessageShareData", "updateTimelineShareData", "onMenuShareAppMessage", "onMenuShareQQ", "onMenuShareWeibo", "onMenuShareQZone", "startRecord", "stopRecord", "onVoiceRecordEnd", "playVoice", "pauseVoice", "stopVoice", "onVoicePlayEnd", "uploadVoice", "downloadVoice", "chooseImage", "previewImage", "uploadImage", "downloadImage", "translateVoice", "getNetworkType", "openLocation", "getLocation", "hideOptionMenu", "showOptionMenu", "hideMenuItems", "showMenuItems", "hideAllNonBaseMenuItem", "showAllNonBaseMenuItem", "closeWindow", "scanQRCode", "chooseWXPay", "openProductSpecificView", "addCard", "chooseCard", "openCard"]};
+        wx.config(WXCONFIG)
+    </script>
+    <script src="__STATIC__/index/js/jquery331.min.js" type="text/javascript"></script>
+    <script src="__STATIC__/index/js/common.js?v=13" type="text/javascript"></script>
+    <style type="text/css">
+        body{margin:0px;overflow:overlay;width:100%;height:100%;background-color:white}
+        html{width:100%;height:100%;}
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
+            /*-webkit-appearance: none;*/
+            -webkit-text-size-adjust: 100%;
+        }
+        body > div.body{
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow:overlay;
+            -webkit-overflow-scrolling:touch;
+            font-size: 36px;
+        }
+        button, input, textarea {
+            border-radius: 0;
+        }
+        select {
+            -webkit-appearance:none;
+        }
+
+        @-webkit-keyframes fadeout {
+            0% {
+                transform:translate(-780px,0px);
+            }
+            100% {
+                transform:translate(780px,0px);
+            }}
+        @-webkit-keyframes fadein {
+            0% {
+                opacity:0;
+            }
+            100% {
+                opacity:1;
+            }}
+        @-webkit-keyframes fadein1 {
+            0% {
+                transform:translate(0px,0px);
+            }
+            50% {
+                transform:translate(-3px,0px);
+            }
+            100% {
+                opacity:1;
+                transform:translate(3px,0px);
+            }}
+        @-webkit-keyframes fadein2 {
+            0% {
+                transform:translate(0px,0px);
+            }
+            50% {
+                transform:translate(-5px,3px);
+            }
+            100% {
+                opacity:1;
+                transform:translate(5px,-3px);
+            }}
+        @-webkit-keyframes fadein3 {
+            0% {
+                transform:translate(0px,0px);
+            }
+            50% {
+                transform:translate(5px,3px);
+            }
+            100% {
+                opacity:1;
+                transform:translate(-5px,-3px);
+            }}
+        @-webkit-keyframes fadein4 {
+            0% {
+                transform:translate(0px,0px);
+            }
+            50% {
+                transform:translate(-5px,-3px);
+            }
+            100% {
+                opacity:1;
+                transform:translate(5px,3px);
+            }}
+        @-webkit-keyframes fadein5 {
+            0% {
+                transform:translate(0px,0px);
+            }
+            50% {
+                transform:translate(-5px,3px);
+            }
+            100% {
+                opacity:1;
+                transform:translate(5px,-3px);
+            }}
+        @-webkit-keyframes rotate {
+            from {
+                transform:rotate(0deg);
+            }
+            to {
+                transform:rotate(360deg);
+            }}
+        @-webkit-keyframes swing {
+            0% {
+                transform:rotate(0deg);
+            }
+            25% {
+                transform:rotate(20deg);
+            }
+            75% {
+                transform:rotate(-20deg);
+            }
+            100% {
+                transform:rotate(0deg);
+            }}
+
+        @keyframes musicRotate {
+            0%{transform:rotate(0deg)}
+            100%{transform:rotate(360deg)}
+        }
+        .p-qrcode{position:absolute;z-index:9999;top:50%;left:46%;display:none;width: 608px;height: 476px;margin-top:-290px;margin-left: -275px;}
+        .p-qrcode__frame{position:absolute;width:100%;height:100%}
+        .p-qrcode__qrcode{position:absolute;z-index:2;width: 252px;top: 139px;margin-left: -128px;left:50%}
+        .p-qrcode__text{position:absolute;z-index:5;width:100%;height:100%;text-align:center;line-height:100px}
+        .mask1{position: fixed;z-index: 1000;top: 0;right: 0;left: 0;bottom: 0;background: rgba(0, 0, 0, 0.5);}
+        .lookuser{position:fixed; top:40px; left:50px; z-index:100; width:60px; height:60px;}
+        #gopay{position:absolute;top:0;z-index:222;width:100%;height:100%;display:none;}
+        #paydiv{position:absolute;border-radius:15px;top:25%;width:85%;left:5%;height:420px;margin:0 auto;text-align:center;background:#FFF;color:#727272;line-height: 65px;}
+        #texlist{position:absolute;z-index:223;display:none;border-radius:15px;top:300px;width:90%;left:5%;height:65%;margin:10px auto;text-align:center;background:#FFF;color:#727272;line-height: 65px;}
+        #texlist dl{height:100%;width:90%;margin:0 auto;overflow-y:scroll;}
+        #texlist dd{border-bottom: 1px solid #e9e9e9;padding:10px 10px;font-size: 25px;}
+        @media only screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) {
+            .p-qrcode{ margin-top: -390px;}
+        }
+    </style>
+    <style type="text/css">
+
+        #img:active{
+            transform:translateY(4px) !important;
+        }
+        #id140663241740864:active{
+            transform:translateY(4px) !important;
+        }
+        #id140663241741536:active{
+            transform:translateY(4px) !important;
+        }
+        #id140663241741816:active{
+            transform:translateY(4px) !important;
+        }
+        #id140663241742544:active{
+            transform:translateY(4px) !important;
+        }
+    </style>
+
+</head>
+<body ontouchstart='' onmouseover=''>
+<div style='font-size:21px; overflow-y:hidden; overflow-x:hidden;overflow-y:hidden; overflow-x:hidden;background-size:100% 100%; background-image:url(__STATIC__/index/img/9c4f92131aa32a5da8d32712ce9275d2.jpg);'  class='body' id='body'>
+
+
+
+    <div id="major" id="major" style="overflow-y:scroll;">
+
+        <div  style="width:100%;height:400px;text-align:center;">
+            <div><img src="http://thirdwx.qlogo.cn/mmopen/vi_32/qBmrKX6mS1l52Jt7L7mIYuoHT0aibjAZpeO1hTDfiaFovn1fgCukLgcVQAjv2x8Q7q7u8icPzLn2nTTUNQPEicdSLw/132" style="margin:60px 0px 0px 0px; border-radius:360px; border-color:black;"/></div>
+            <div  style="margin:10px 0px 0px 0px; font-size:32px; font-weight:450; color:white; ">觅树知音</div>
+            <div  style="margin:10px 0px 0px 0px; font-size:32px; font-weight:800; color:white; ">『已收到了2个真心话』</div></div>
+
+
+        <div id="texlist">
+            <img src="__STATIC__/index/img/close.png" style="right:0px;position:absolute;top:2px;border-radius:50%;" onclick="$('#texlist').hide();">
+            <dl>
+                <dd>在你伤心的时候，我陪你</dd>
+                <dd>其它你很重要</dd>
+                <dd>认识你真好</dd>
+                <dd>我喜欢你</dd>
+                <dd>糟了！是心动的感觉</dd>
+                <dd>我要和你做一辈子的好朋友</dd>
+                <dd>最近过得怎么样</dd>
+                <dd>我还在等你</dd>
+                <dd>走，去吃好吃的~</dd>
+                <dd>我想你了</dd>
+                <dd>遇见你是我今生最大的幸运</dd>
+                <dd>往后余生，请多指教</dd>
+                <dd>确认过眼神,你是我的人</dd>
+                <dd>我钟意你啊</dd>
+                <dd>宝贝，你要知道我是最爱你的</dd>
+                <dd>我喜欢你很久了</dd>
+                <dd>嘿，做我女朋友吧</dd>
+                <dd>我们一起玩吧</dd>
+                <dd>我等你</dd>
+                <dd>我爱你，爱到离不开你</dd>
+                <dd>你是我遇到过最可爱的人</dd>
+                <dd>什么时候想嫁人了跟我说下，我娶你</dd>
+                <dd>今生今世，我只爱你一人</dd>
+                <dd>在吗？</dd>
+                <dd>没有你我过的不好，我想你了</dd>
+                <dd>没事，有我在</dd>
+                <dd>我养你啊</dd>
+                <dd>我明天去找你</dd>
+                <dd>我的卡，你随便刷</dd>
+                <dd>约吗？</dd>
+                <dd>未经允许擅自喜欢你，不好意思了</dd>
+                <dd>我会照顾你一辈子的</dd>
+                <dd>陪你到老</dd>
+                <dd>下雨天我陪你淋雨</dd>
+                <dd>闺蜜一辈子</dd>
+                <dd>你是世界上最美的人</dd>
+                <dd>我特别特别特别爱你</dd>
+                <dd>好久不见</dd>
+                <dd>照顾好自己</dd>
+                <dd>我爱你</dd>
+                <dd>做一辈子的好朋友</dd>
+                <dd>只要你需要,我永远在你能看到的地方</dd>
+                <dd>世界在大,我眼里只有你</dd>
+                <dd>爱看你笑</dd>
+                <dd>好好吃饭</dd>
+                <dd>别忘了我</dd>
+                <dd>祝你幸福</dd>
+                <dd>猜猜我是谁</dd>
+                <dd>你还记得我吗</dd>
+
+
+                <dd>你最割舍不下的人是谁?</dd>
+                <dd>如果我爱上你,你会怎么办?</dd>
+                <dd>如果我喜欢你,你会接受吗?</dd>
+                <dd>如果我追你,成功率多少?</dd>
+                <dd>你觉得我怎么做才能撩到你?</dd>
+                <dd>如果我跟你表白,你会答应吗?</dd>
+                <dd>2019,你最大的心愿是什么?</dd>
+                <dd>你可以做我女朋友吗?</dd>
+                <dd>你觉得自己渣吗?</dd>
+                <dd>你初恋是谁?</dd>
+                <dd>你对另一半的要求是什么?</dd>
+                <dd>你觉得自己最大的弱点是什么?</dd>
+                <dd>如果我跟你复合,你会答应吗?</dd>
+                <dd>我可以喜欢你一下吗?</dd>
+                <dd>你觉得我们会不会在一起?</dd>
+                <dd>你做过最疯狂的事情是什么?</dd>
+                <dd>你想和我在一起吗?</dd>
+                <dd>你最讨厌的人是谁?</dd>
+                <dd>我们在一起,好吗?</dd>
+                <dd>你现在单身吗?</dd>
+                <dd>你谈过几次恋爱?</dd>
+                <dd>处CP吗?</dd>
+                <dd>你有喜欢的人吗?</dd>
+                <dd>你为什么还是单身?</dd>
+                <dd>你现在想谈恋爱吗?</dd>
+                <dd>你现在过得好吗?</dd>
+                <dd>你喜欢的人喜欢你吗?</dd>
+                <dd>你暗恋过谁?</dd>
+                <dd>你现在喜欢的女生叫什么?</dd>
+                <dd>你觉得自己花心吗?</dd>
+                <dd>你谈过恋爱吗?</dd>
+                <dd>你现在在哪个城市?</dd>
+                <dd>你觉得自己是个什么样的人?</dd>
+                <dd>你现在的目标是什么?</dd>
+                <dd>你为何这么优秀?</dd>
+                <dd>你愿意让我照顾你一辈子吗?</dd>
+                <dd>你觉得自己什么时候能脱单?</dd>
+                <dd>你相信一见钟情吗?</dd>
+                <dd>你最近一次哭,是为了什么?</dd>
+                <dd>你第一次接吻是什么感觉?</dd>
+                <dd>你爱的人VS爱你的人,你选择?</dd>
+                <dd>分手后你的前任教会了你什么?</dd>
+                <dd>你在上段恋爱中最后悔的事情是?</dd>
+                <dd>在爱情中,你遇到过什么套路?</dd>
+                <dd>你一个人做过最扎心的事情是什么?</dd>
+                <dd>你曾经有多认真的喜欢一个人?</dd>
+                <dd>你曾经喜欢过的人现在怎么样了?</dd>
+            </dl>
+
+        </div>
+        <div class="mask1" style="display: none;"></div>
+        <div class="p-qrcode">
+            <img class="p-qrcode__frame" src="__STATIC__/index/img/zxh.png?v=1">
+            <img class="p-qrcode__qrcode" src="" />
+        </div>
+        <!-- <img src="https://momoqn.looosen.cn/77284786" onclick="clickGo('', {})" style="bottom:0px; width:750px; height:100px; position:absolute;"/>
+         -->
+        <!--<div class="lookuser" onclick="$('#gopay').show();"><img src="__STATIC__/index/img/other.png" /></div>
+       <button borderradius="10px" textalign="center" onclick="$('#gopay').show();" id="id139890710923976" style="font-size:35px;box-shadow:-1px 15px 30px -12px black; background-color:#e8a24f; width:200px; height:80px; color:#FFFFFF; border:1px solid #e05d15; padding:0px 0px 6px 0px; border-radius:20px;position:fixed; top:40px; left:20px; z-index:100;">偷看TA是谁</button>
+       -->
+
+        <div id="gopay">
+            <section  id="paydiv">
+                <div style="padding-top:50px;"><img src="__STATIC__/index/img/close.png" style="left:12px;position:absolute;top:2px;border-radius:50%;" onclick="$('#gopay').hide();">
+                    <h1 style="font-weight:bold;color:#000;">温馨提示<h1>
+                        支付9.99元即可解锁所有头像<br />
+                        看看哪些人在偷偷向你留言<br />
+                        <button id="sendpay" style="font-size:35px; margin:30px 40px 20px 40px; box-shadow:-1px 15px 30px -12px black; background-color:#20B31C;width:300px; height:80px; color:#FFFFFF; padding:0px 0px 6px 0px; border-radius:20px;" >好哒</button><br />
+                </div>
+            </section>
+        </div>
+        <div id="mid" id="mid" style="display:flex; flex-direction:column; align-items:center; width:100%; height:400px;">
+            <div id="test" music="http://dl.stream.qqmusic.qq.com/C400000eXvbv2GXLdW.m4a?vkey=FA18DB3E03C94247D0F58236CD90A30B5C265DECAABE239AB909FDC355D455E45C09B11E8F6FE345090ABF974A098729F7766BF78ED137F4&guid=2552124720&uin=0&fromtag=66" loop="True" autoplay="True" id="test" style="background-image:url(__STATIC__/index/img/67101018.png); background-repeat:no-repeat; background-size:cover; position:fixed; top:40px; left:650px; z-index:100; width:60px; height:60px;"></div>
+            <span  style="display:none; font-size:32px; border-color:black; animation:fadeout 5s 0s linear running infinite both; animation-duration:3s; margin:30px; padding-left:20px; padding-top:20px; padding-right:20px; padding-bottom:20px; position:absolute; top:769px; left:61px;">弹幕啊实打实大师大傻傻的客户</span>
+            <span  style="display:none; font-size:32px; border-color:black; animation:fadeout 5s 0s linear running infinite both; animation-duration:5s; margin:30px; padding-left:20px; padding-top:20px; padding-right:20px; padding-bottom:20px; position:absolute; top:455px; left:53px;">弹幕2</span>
+
+
+            <label  style="margin:30px; border:solid 0px; font-size:35px; white-space:nowrap; background-color:#fbf7f7; height:50px; border-radius:25px; padding:0px 50px 5px 20px; opacity:0.6; animation:fadeout 10s 0s linear running infinite both; animation-duration:9s; position:absolute; top:400px; left:5px;">最近过得怎么样<img id="b" src="__STATIC__/index/img/5a72f13fc9a7a10d574735523b7c6973.png" id="b" style="left:-8px; float:left;margin-top:2px;width:46px; height:46px;border-radius: 46px;"/></label>
+            <label  style="margin:30px; border:solid 0px; font-size:35px; white-space:nowrap; background-color:#fbf7f7; height:50px; border-radius:25px; padding:0px 50px 5px 20px; opacity:0.6; animation:fadeout 10s 0s linear running infinite both; animation-duration:9s; position:absolute; top:455px; left:5px;">猜猜我是谁<img id="b" src="__STATIC__/index/img/5a72f13fc9a7a10d574735523b7c6973.png" id="b" style="left:-8px; float:left;margin-top:2px;width:46px; height:46px;border-radius: 46px;"/></label>
+
+
+        </div>
+
+
+        <div id="opdiv" style="display:flex; flex-direction:column; align-items:center; width:100%; height:500px;">
+            <input id="input01" value=""  placeholder="对我说句悄悄话吧，在此输入..." style="font-size:26px; border:none; background-color:transparent; margin:30px 80px 0px 0px; color:#1f1f1f; border-radius:10px; width:500px; height:90px; padding-left:20px; padding-top:20px; padding-right:20px; padding-bottom:20px; position:absolute; top:fixed; left:80px;"/>
+            <div  style="height:3px; width:60%; background:black; opacity:0.1; position:absolute; top:900px; left:100px;"></div>
+
+            <button id="img" onclick="clickCall('index.php?act=getword&oid=o6V6M1NN9HUeM1X2g4O7ICDVG74A', {'args': 'o6V6M1NN9HUeM1X2g4O7ICDVG74A'})" id="img" style="padding:0px; border-radius:5px; background-color:#4368b8; color:#f9e8f5; border:1px solid #615e66; font-size:25px; width:100px; height:60px; position:absolute; top:850px; left:580px;">提交</button>
+            <button borderradius="10px" textalign="center" onclick="$('#gopay').show();" id="id139890710923976" style="font-size:35px; margin:30px 40px 20px 40px; box-shadow:-1px 15px 30px -12px black; background-color:#e8a24f; width:300px; height:80px; color:#FFFFFF; border:1px solid #e05d15; padding:0px 0px 6px 0px; border-radius:20px; position:absolute; top:1050px; left:0px;">偷看TA是谁</button>
+
+
+            <button borderradius="10px" textalign="center" onclick="testfetch({'arg': '测试参数'})" id="id139890710923808" style="padding:0px 0px 6px 0px; font-size:35px; margin:30px 40px 20px 40px; box-shadow:-1px 15px 30px -12px black; background-color:#e8a24f; width:300px; height:80px; color:#FFFFFF; border:1px solid #e05d15; animation:fadein1 1s 0s linear running infinite both; border-radius:20px; position:absolute; top:1050px; left:350px;">让好友来写</button>
+
+
+            <!--2019-06-27 22:20:00-->
+            <div tag="1" style="display:none;">
+                <button onclick="setauth_word('猜猜我是谁')" style="background-color:rgba(300,300,300,0.6); color:black; border:0px; border-radius:5px; border-style:dashed; border-color:black; font-size:30px; padding:2px; position:absolute; top:920px; width:190px; height:60px; left:95px;">猜猜我是谁</button>
+                <button onclick="setauth_word('最近过得怎么样')" style="background-color:rgba(300,300,300,0.6); color:black; border-radius:5px; border:0px; border-style:dashed; border-color:black; font-size:30px; padding:2px; position:absolute; top:920px; width:260px; height:60px; left:295px;">最近过得怎么样</button>
+                <button onclick="setauth_word('别熬夜了')" style="background-color:rgba(300,300,300,0.6); color:black; border:0px; border-radius:5px; border-style:dashed; border-color:black; font-size:30px; padding:2px; position:absolute; top:990px; width:145px; height:60px; left:95px;">别熬夜了</button>
+                <button onclick="setauth_word('我喜欢你')" style="background-color:rgba(300,300,300,0.6); color:black; border:0px; border-radius:5px; border-style:dashed; border-color:black; font-size:30px; padding:2px; position:absolute; top:990px; width:145px; height:60px; left:260px;">我喜欢你</button>
+                <button onclick="setauth_word('晚安')" style="background-color:rgba(300,300,300,0.6); color:black; border-radius:5px; border:0px; border-style:dashed; border-color:black; font-size:30px; padding:2px; position:absolute; top:990px; width:140px; height:60px; left:420px;">晚安</button>
+                <button onclick="clickCall('index.php?act=t2', {'tag': 1})" id="id140663241741536" style="padding:0px; border-radius:5px; background-color:#4368b8; color:#f9e8f5; border:1px solid #615e66; font-size:25px; width:100px; height:60px; position:absolute; top:985px; left:580px;">换一批</button></div>
+            <div tag="2" style="display:none;">
+                <button onclick="setauth_word('我还在等你')" style="background-color:rgba(300,300,300,0.6); color:black; border:0px; border-radius:5px; border-style:dashed; border-color:black; font-size:30px; padding:2px; position:absolute; top:920px; width:190px; height:60px; left:95px;">我还在等你</button>
+                <button onclick="setauth_word('还想再见到你')" style="background-color:rgba(300,300,300,0.6); color:black; border-radius:5px; border:0px; border-style:dashed; border-color:black; font-size:30px; padding:2px; position:absolute; top:920px; width:260px; height:60px; left:295px;">还想再见到你</button>
+                <button onclick="setauth_word('爱看你笑')" style="background-color:rgba(300,300,300,0.6); color:black; border:0px; border-radius:5px; border-style:dashed; border-color:black; font-size:30px; padding:2px; position:absolute; top:990px; width:145px; height:60px; left:95px;">爱看你笑</button>
+                <button onclick="setauth_word('好好吃饭')" style="background-color:rgba(300,300,300,0.6); color:black; border:0px; border-radius:5px; border-style:dashed; border-color:black; font-size:30px; padding:2px; position:absolute; top:990px; width:145px; height:60px; left:260px;">好好吃饭</button>
+                <button onclick="setauth_word('对不起')" style="background-color:rgba(300,300,300,0.6); color:black; border-radius:5px; border:0px; border-style:dashed; border-color:black; font-size:30px; padding:2px; position:absolute; top:990px; width:140px; height:60px; left:420px;">对不起</button>
+                <button onclick="clickCall('index.php?act=t2', {'tag': 2})" id="id140663241741816" style="padding:0px; border-radius:5px; background-color:#4368b8; color:#f9e8f5; border:1px solid #615e66; font-size:25px; width:100px; height:60px; position:absolute; top:985px; left:580px;">换一批</button></div>
+            <div tag="3" style="display:none;">
+                <button onclick="setauth_word('早点睡吧')" style="background-color:rgba(300,300,300,0.6); color:black; border:0px; border-radius:5px; border-style:dashed; border-color:black; font-size:30px; padding:2px; position:absolute; top:920px; width:190px; height:60px; left:95px;">早点睡吧</button>
+                <button onclick="setauth_word('你还记得我吗？')" style="background-color:rgba(300,300,300,0.6); color:black; border-radius:5px; border:0px; border-style:dashed; border-color:black; font-size:30px; padding:2px; position:absolute; top:920px; width:260px; height:60px; left:295px;">你还记得我吗？</button>
+                <button onclick="setauth_word('加油')" style="background-color:rgba(300,300,300,0.6); color:black; border:0px; border-radius:5px; border-style:dashed; border-color:black; font-size:30px; padding:2px; position:absolute; top:990px; width:145px; height:60px; left:95px;">加油</button>
+                <button onclick="setauth_word('祝你幸福')" style="background-color:rgba(300,300,300,0.6); color:black; border:0px; border-radius:5px; border-style:dashed; border-color:black; font-size:30px; padding:2px; position:absolute; top:990px; width:145px; height:60px; left:260px;">祝你幸福</button>
+                <button onclick="setauth_word('别忘了我')" style="background-color:rgba(300,300,300,0.6); color:black; border-radius:5px; border:0px; border-style:dashed; border-color:black; font-size:30px; padding:2px; position:absolute; top:990px; width:140px; height:60px; left:420px;">别忘了我</button>
+                <button onclick="clickCall('index.php?act=t2', {'tag': 3})" id="id140663241742544" style="padding:0px; border-radius:5px; background-color:#4368b8; color:#f9e8f5; border:1px solid #615e66; font-size:25px; width:100px; height:60px; position:absolute; top:985px; left:580px;">换一批</button></div></div></div>
+    <div id="checkin" id="checkin" style="background-size:100% 100%; background-image:url(__STATIC__/index/img/9c4f92131aa32a5da8d32712ce9275d2.jpg); overflow-y:scroll; display:none; flex-direction:column; align-items:center; width:780px; height:1350px;">
+        <span onclick="clickCall('index.php?act=back', {'args': 'o6V6M1NN9HUeM1X2g4O7ICDVG74A'})" style="font-size:32px; font-weight:450; color:white; padding-left:20px; padding-top:20px; padding-right:20px; padding-bottom:20px; position:absolute; top:0px; left:20px;">返回</span>
+        <span  style="font-size:48px; font-weight:450; color:white; margin:60px 0px 0px 0px; padding-left:20px; padding-top:20px; padding-right:20px; padding-bottom:20px;">觅树知音收到的的真心话</span>
+        <div  style="margin:40px 0px 0px 0px; display:flex; flex-direction:column; align-items:center;">
+
+            <label tag="-1" style="margin:10px; border:solid 0px; font-size:35px; white-space:nowrap; background-color:#fbf7f7; height:50px; border-radius:25px; padding:0px 5px 5px 20px; opacity:0.6;">最近过得怎么样<img id="b" src="__STATIC__/index/img/5a72f13fc9a7a10d574735523b7c6973.png" id="b" style="left:-8px; float:left; margin-top:2px; width:46px; height:46px;border-radius: 46px;"/>
+                <img src="__STATIC__/index/img/del.png" onclick="clickCall('index.php?act=delet', {'args': 1133995, 'arg': 1})" style="left:45px; float:right; margin:5px 10px 0px 40px; width:40px; height:40px;"/>
+            </label>
+            </label>
+            <label tag="-2" style="margin:10px; border:solid 0px; font-size:35px; white-space:nowrap; background-color:#fbf7f7; height:50px; border-radius:25px; padding:0px 5px 5px 20px; opacity:0.6;">猜猜我是谁<img id="b" src="__STATIC__/index/img/5a72f13fc9a7a10d574735523b7c6973.png" id="b" style="left:-8px; float:left; margin-top:2px; width:46px; height:46px;border-radius: 46px;"/>
+                <img src="__STATIC__/index/img/del.png" onclick="clickCall('index.php?act=delet', {'args': 1133994, 'arg': 2})" style="left:45px; float:right; margin:5px 10px 0px 40px; width:40px; height:40px;"/>
+            </label>
+            </label>
+
+
+
+        </div>
+    </div>
+    <div id="sharing" id="sharing" >
+        <img id="close1" src="__STATIC__/index/img/76637265.jpg" onclick="clickCall('index.php?act=close', {})" id="close1" style="display:none; width:780px; height:1400px;"/>
+        <img id="ad" src="__STATIC__/index/img/76614593.png" onclick="clickCall('index.php?act=close', {})" id="ad" style="display:none; position:absolute; top:0px; left:20px;"/></div>
+    <div id="popup" id="popup" style="display:none;"></div></div><script type='text/javascript' src='__STATIC__/index/js/pythonjs.min.js'></script>
+<script type='text/javascript'>
+    var randI=1;
+    if(getCookie("one")==null || getCookie("one")==""){
+        var today = new Date();
+        var expires = new Date();
+        expires.setTime(today.getTime() + 1000*60*60*720);//1000*60*60*24
+        setCookie("one",parseInt(randI),expires);//parseInt(Math.random()*9+1)
+    }
+    if(getCookie("txt0")!=null && getCookie("txt0")!=""){
+        $('#input01').val(unescape(decodeURI(getCookie("txt0"))));
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 1);
+        setCookie("txt0","",expires);
+        var u = navigator.userAgent, app = navigator.appVersion;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if(isiOS){
+            setTimeout(function () {
+                $('#body').css({
+                    'width':$(window).width(),
+                    'height':$(window).height(),
+                })
+                $('#id140663241740864').css({
+                    'top':1010,
+                    //'height':$(window).height(),
+                })
+            },100);
+        }
+    }
+    $("#texlist dd").click(function(){
+        $('#texlist dd').each(function (i){
+            $(this).css("color","#727272");
+        });
+        $(this).css("color","red");
+        var isuser=parseInt('1');
+        if(isuser==0){
+            var today = new Date();
+            var expires = new Date();
+            expires.setTime(today.getTime() + 1000*60*60*24);
+            setCookie("txt0",escape($(this).text()),expires);
+            location.replace('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6e7c9c621a034d90&redirect_uri=http%3A%2F%2Fquietoy.wzhybj.com%2F%3Fact%3Dauthinfo%26url%3DaHR0cDovL3F1aWV0b3kud3poeWJqLmNvbS8%3D&response_type=code&scope=snsapi_userinfo&state=login_3810669494#wechat_redirect');
+            return false;
+        }else{
+            $('#input01').val($(this).text());
+        }
+        $('#texlist').hide();
+    })
+    function setauth_word(txt){
+        var isuser=parseInt('1');
+        if(isuser==0){
+            var today = new Date();
+            var expires = new Date();
+            expires.setTime(today.getTime() + 1000*60*60*24);
+            setCookie("txt0",escape(txt),expires);
+            location.replace('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx6e7c9c621a034d90&redirect_uri=http%3A%2F%2Fquietoy.wzhybj.com%2F%3Fact%3Dauthinfo%26url%3DaHR0cDovL3F1aWV0b3kud3poeWJqLmNvbS8%3D&response_type=code&scope=snsapi_userinfo&state=login_3810669494#wechat_redirect');
+            return false;
+        }else{
+            $('#input01').val(txt);
+        }
+    }
+    function setCookie(c_name, value, expiredays){
+        //　var exdate=new Date();
+        //exdate.setDate(exdate.getDate() + expiredays);
+        document.cookie=c_name+ "=" + escape(value) + ((expiredays==null) ? "" : ";expires="+expiredays.toGMTString());
+    }
+    $("#sendpay").click(function(){
+        window.location.href='http://m.bifeng88.com/pay/unlocked4/id/1218881/pid/1';
+    })
+    function getCookie(name)
+    {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg))
+            return (arr[2]);
+        else
+            return null;
+    }
+    var testfetch = function(args) {
+        ret = fetch("index.php?act=api", { "arg":args.arg });
+        $("#popup").html(ret);
+        $("#popup").css("display", "block");
+    }
+    $('.mask1').click(function(event){
+        $('.p-qrcode').hide();
+        $('.mask1').hide();
+    })
+
+    ;(function() {
+        var div = $("#test");
+        var musicPlayer = new Audio();
+        musicPlayer.src = 'http://dl.stream.qqmusic.qq.com/C400000eXvbv2GXLdW.m4a?vkey=FA18DB3E03C94247D0F58236CD90A30B5C265DECAABE239AB909FDC355D455E45C09B11E8F6FE345090ABF974A098729F7766BF78ED137F4&guid=2552124720&uin=0&fromtag=66';//https://momoqn.looosen.cn/76627092
+        musicPlayer.loop = 'loop';
+        var playMusic = function() {
+            div.css("animation", "musicRotate 3s infinite linear");
+            musicPlayer.play();
+        }
+        var pauseMusic = function() {
+            div.css("animation", "");
+            musicPlayer.pause();
+        }
+        var switchMusic = function() {
+            if(musicPlayer.paused) {
+                playMusic();
+            } else {
+                pauseMusic();
+            }
+        }
+
+        var nextMusic = function(src) {
+            if(src) {
+                musicPlayer.src = src;
+                musicPlayer.play();
+            }
+        }
+
+        div.on("click", switchMusic)
+        if(!window.Music) {
+            window.Music = {}
+        }
+        window.Music['test'] = {
+            play: playMusic,
+            switch: switchMusic,
+            pause: pauseMusic,
+            next: nextMusic
+        }
+    })();
+
+    __READY_CALL(function(){
+        window.Music['test'].play();
+    });
+    __READY_CALL(function(){
+        var link = "http://quietoy.wzhybj.com/index.php?oid=o6V6M1NN9HUeM1X2g4O7ICDVG74A";
+        if(!link.match(/^http(s)?\:\/\//g)) {
+            if(link.startsWith('/')) {
+                link = location.origin + link;
+            } else {
+                link = location.origin + location.pathname.replace(/[^\/]*$/g, '') + link;
+            }
+        }
+        wx.onMenuShareAppMessage({
+            "title": "对我说句真心话吧。",
+            "desc": "没事，你说了我也不知道是谁说的~",
+            "link": link,
+            "imgUrl": "http://thirdwx.qlogo.cn/mmopen/vi_32/qBmrKX6mS1l52Jt7L7mIYuoHT0aibjAZpeO1hTDfiaFovn1fgCukLgcVQAjv2x8Q7q7u8icPzLn2nTTUNQPEicdSLw/132",
+            "success": function() {
+                // clickCall('/momarket/share/api', {"type": "sapp"});
+                $('#popup').css('display', 'none');
+            }
+        });
+        wx.onMenuShareTimeline({
+            "title": "对我说句真心话吧。",
+            "link": link,
+            "imgUrl": "http://thirdwx.qlogo.cn/mmopen/vi_32/qBmrKX6mS1l52Jt7L7mIYuoHT0aibjAZpeO1hTDfiaFovn1fgCukLgcVQAjv2x8Q7q7u8icPzLn2nTTUNQPEicdSLw/132",
+            "success": function() {
+                //  clickCall('/momarket/share/api', {"type": "tline"});
+                $('#popup').css('display', 'none');
+            }
+        });
+        /*if(wx.miniProgram) {
+            wx.miniProgram.postMessage({ data: { shareInfo: {"title": "对我说句匿名悄悄话吧", "desc": "没事，你说了我也不知道是谁说的~", "link": "http://http://quietoy.wzhybj.com/520plus/index.php?oid=jE7z788q7DTQ9YzD2_mAAennNq1CxPFSUwCOxfI1dI4%3D", "imgUrl": "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKQMnKMT5wzaIae110wXPicvR86GrweqVnBEUwfsAbjNJPBFKRRRVibzQoHVtsUTpUdIq5XWHKfQOmQ/132"} } });
+        }*/
+    });
+    $('*[tag=1]').css('display', 'block')
+</script>
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?0ed3823aa79250e221e9926795bdd31b";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+</body>
+</html>
