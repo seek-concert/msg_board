@@ -240,4 +240,15 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
+    //验证码配置
+    'captcha'                =>[
+        'codeSet'    =>    'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+        'fontSize'    =>    30,
+        'length'      =>    4,
+        'imageW'      =>    0,
+        'imageH'      =>    0,
+        'expire'      =>    60,
+        'useNoise'    =>    false,
+        'useCurve'    =>    false,
+    ],
 ];
