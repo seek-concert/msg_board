@@ -36,3 +36,15 @@ function set_admin_log($admin_id=0,$message=''){
     $log_sql['ip'] = request()->ip();
     model('message_admin/AdminAction')->add_data($log_sql);
 }
+
+/**
+ * 返回数据
+ * @param int $code 0  1
+ * @param string $msg
+ * @param array $data
+ * @return array
+ */
+function renderJson($code, $msg = '', $data = [])
+{
+    return compact('code', 'msg', 'data');
+}
