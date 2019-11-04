@@ -48,13 +48,13 @@ class Login extends Controller
             if (!$password) {
                 $this->error('请输入登录密码');
             }
-//            if(!$vercode){
-//                $this->error('请输入验证码');
-//            }
-//
-//            if(!captcha_check($vercode)){
-//                $this->error('验证码错误');
-//            };
+           if(!$vercode){
+               $this->error('请输入验证码');
+           }
+
+           if(!captcha_check($vercode)){
+               $this->error('验证码错误');
+           };
             //获取管理员详细信息
             $admin_info = $this->admin_model->get_one_data(['username' => $username]);
             if (!$admin_info) {
