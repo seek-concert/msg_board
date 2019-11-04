@@ -7,10 +7,10 @@
 // | Author: Leimon <leimon1314@gmail.com>
 // +----------------------------------------------------------------------
 
-// [ 用户管理 ]
+// [ 支付管理 ]
 namespace app\message_admin\controller;
 
-class Member extends Base
+class Pay extends Base
 {
 
     protected $member_model;
@@ -27,56 +27,41 @@ class Member extends Base
     }
 
     /**
-     * 用户列表模板
+     * 支付列表模板
      *
      * @return void
      */
-    public function member_lists(){
+    public function pay_lists(){
         return view();
     }
 
     /**
-     * 获取用户列表
+     * 获取支付列表
      *
      * @return void
      */
-    public function get_member_lists(){
+    public function get_pay_lists(){
         $param = input();
         $nickname = isset($param['nickname'])?$param['nickname']:'';
-        $is_pay = isset($param['is_pay'])?$param['is_pay']:'';
+        $status = isset($param['status'])?$param['status']:'';
         $page = isset($param['page'])?$param['page']:'';
         $limit = isset($param['limit'])?$param['limit']:'';
-        $member_sql = [];
+        $pay_sql = [];
+
         //用户名模糊查找
         if(!empty($nickname)){
-            $member_sql['nickname'] = ['like','%'.$nickname.'%'];
+            $member_ids = $this->member_model->get_one_column(['nickname'=>['like','%'.$nickname.'%']]);
+            $pay_sql['member_id'] = ['in',$member_ids];
         }
         //是否付费查找
-        if(!empty($is_pay)){
-            $member_sql['is_pay'] = $is_pay;
+        if(!empty($status)){
+            $pay_sql['status'] = $status;
         }
-        $lists = $this->member_model->get_all_data_page($member_sql, $page, $limit, 'id desc', 'id,nickname,avatar,inputtime,is_pay');
+        $lists = $this->pay_model->get_all_data_page($pay_sql, $page, $limit, 'id desc', 'id,num,status,inputtime,member_id',['member']);
         $return_data = [];
         $return_data['code'] = 1;
-        $return_data['count'] = $this->member_model->get_all_count($member_sql);
+        $return_data['count'] = $this->pay_model->get_all_count($pay_sql);
         $return_data['data'] = $lists;
         return $return_data;
-    }
-    /**
-     * 获取用户详情
-     *
-     * @return void
-     */
-    public function get_member_detail(){
-        $param = input();
-        print_r($param);
-        $id = isset($param['id'])?$param['id']:0;
-        if($id == 0){
-            echo "<font color='red'>请勿非法访问10001</font>";
-            die();
-        }
-        $member_info = $this->member_model->get_one_data(['id'=>$id,'','nickname,avatar,inputtime,is_pay']);
-
-        return view();
     }
 }

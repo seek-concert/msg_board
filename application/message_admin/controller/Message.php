@@ -7,76 +7,74 @@
 // | Author: Leimon <leimon1314@gmail.com>
 // +----------------------------------------------------------------------
 
-// [ 用户管理 ]
+// [ 留言管理 ]
 namespace app\message_admin\controller;
 
-class Member extends Base
+class Message extends Base
 {
 
     protected $member_model;
-    protected $pay_model;
     protected $message_board;
     protected $share_model;
     public function __construct()
     {
         parent::__construct();
         $this->member_model = model('Member');
-        $this->pay_model = model('Pay');
         $this->message_board = model('MessageBoard');
         $this->share_model = model('Share');
     }
 
     /**
-     * 用户列表模板
+     * 消息列表模板
      *
      * @return void
      */
-    public function member_lists(){
+    public function message_lists(){
         return view();
     }
-
+    
     /**
-     * 获取用户列表
+     * 获取消息列表
      *
      * @return void
      */
-    public function get_member_lists(){
+    public function get_message_lists(){
         $param = input();
         $nickname = isset($param['nickname'])?$param['nickname']:'';
-        $is_pay = isset($param['is_pay'])?$param['is_pay']:'';
+        $message = isset($param['message'])?$param['message']:'';
         $page = isset($param['page'])?$param['page']:'';
         $limit = isset($param['limit'])?$param['limit']:'';
-        $member_sql = [];
+        $message_sql = [];
+
         //用户名模糊查找
         if(!empty($nickname)){
-            $member_sql['nickname'] = ['like','%'.$nickname.'%'];
+            $member_ids = $this->member_model->get_one_column(['nickname'=>['like','%'.$nickname.'%']]);
+            $message_sql['member_id'] = ['in',$member_ids];
         }
-        //是否付费查找
-        if(!empty($is_pay)){
-            $member_sql['is_pay'] = $is_pay;
+        //留言查找
+        if(!empty($message)){
+            $message_sql['message'] = ['like','%'.$message.'%'];
         }
-        $lists = $this->member_model->get_all_data_page($member_sql, $page, $limit, 'id desc', 'id,nickname,avatar,inputtime,is_pay');
+        $lists = $this->message_board->get_all_data_page($message_sql, $page, $limit, 'id desc', 'id,send_member_id,inputtime,member_id,message',['member','send_member']);
         $return_data = [];
         $return_data['code'] = 1;
-        $return_data['count'] = $this->member_model->get_all_count($member_sql);
+        $return_data['count'] = $this->message_board->get_all_count($message_sql);
         $return_data['data'] = $lists;
         return $return_data;
     }
-    /**
-     * 获取用户详情
-     *
-     * @return void
-     */
-    public function get_member_detail(){
-        $param = input();
-        print_r($param);
+
+
+    public function message_del(){
+        $param = input('');
         $id = isset($param['id'])?$param['id']:0;
         if($id == 0){
-            echo "<font color='red'>请勿非法访问10001</font>";
-            die();
+            $this->error('请勿非法访问');
         }
-        $member_info = $this->member_model->get_one_data(['id'=>$id,'','nickname,avatar,inputtime,is_pay']);
-
-        return view();
+        $ret = $this->message_board->delete_data(['id'=>$id]);
+        if($ret){
+            $this->success('删除该留言成功');
+        }else{
+            $this->error('删除该留言失败,请重试');
+        }
     }
 }

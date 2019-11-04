@@ -21,17 +21,13 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">用户昵称</label>
                     <div class="layui-input-block">
-                        <input type="text" name="nickname" placeholder="请输入" autocomplete="off" class="layui-input">
+                        <input type="text" name="nickname" placeholder="输入昵称即可搜索"" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">是否缴费</label>
+                    <label class="layui-form-label">信息搜索</label>
                     <div class="layui-input-block">
-                        <select name="is_pay" class="layui-input">
-                            <option value="">请选择</option>
-                            <option value="1">已缴费</option>
-                            <option value="-1">未缴费</option>
-                        </select>
+                        <input type="text" name="message" placeholder="输入关键词即可搜索" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -43,12 +39,12 @@
         </div>
 
         <div class="layui-card-body">
-            <table id="member_lists" lay-filter="test"></table>
+            <table id="message_lists" lay-filter="test"></table>
 
             <script type="text/html" id="barschool">
                
-                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="member_detail">
-                    <i class="layui-icon layui-icon-file"></i>查看用户详情
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="message_dell">
+                    <i class="layui-icon layui-icon-delete"></i>删除该条留言
                 </a>
                
             </script>
@@ -65,14 +61,15 @@
         index: 'lib/index' //主入口模块
     });
 
-    layui.use('table', function () {
+    layui.use(['table','jquery'], function () {
         var table = layui.table;
-        var form = layui.form
+        var form = layui.form;
+        var $ = layui.jquery;
         //第一个实例
         table.render({
-            elem: '#member_lists',
+            elem: '#message_lists',
             height: 550,
-            url: '{:url("get_member_lists")}', //数据接口
+            url: '{:url("get_message_lists")}', //数据接口
             where: {},
             page: true, //开启分页
             toolbar: true,
@@ -81,40 +78,40 @@
                 statusCode: 1,//规定成功的状态码，默认：0
             },
             cols: [
-                [ //表头
-                    {
+                    [{
                         type: 'checkbox',
                         fixed: 'left'
                     },
                     {
                         field: 'id',
                         title: 'ID',
-                        sort: true,
                     },
                     {
-                        field: 'avatar',
-                        title: '用户头像',
-                        templet:'<div><img style="width: 50%;height: 100%" src="{{ d.avatar }}"></div>'
+                        field: 'send_nickname',
+                        title: '留言人',
+                        templet:'<div>{{ d.send_nickname }}(用户id:{{ d.send_member_id }})</div>',
                     },
                     {
                         field: 'nickname',
-                        title: '用户昵称',
+                        title: '被留言人',
+                        templet:'<div>{{ d.nickname }}(用户id:{{ d.member_id }})</div>'
                     },
+                   
                     {
-                        field: 'is_pay',
-                        title: '是否缴费',
+                        field: 'message',
+                        title: '留言内容',
                     },
                     {
                         field: 'inputtime',
-                        title: '创建时间',
+                        title: '留言时间',
                     },
-                    // {
-                    //     fixed: 'right',
-                    //     title: '操作',
-                    //     width: 220,
-                    //     align: 'center',
-                    //     toolbar: '#barschool'
-                    // } //这里的toolbar值是模板元素的选择器
+                    {
+                        fixed: 'right',
+                        title: '操作',
+                        width: 220,
+                        align: 'center',
+                        toolbar: '#barschool'
+                    } //这里的toolbar值是模板元素的选择器
                 ]
             ],
 
@@ -125,7 +122,7 @@
             var field = data.field;
 
             //执行重载
-            table.reload('member_lists', {
+            table.reload('message_lists', {
                 where: field
                 , page: {
                     curr: 1 //重新从第 1 页开始 避免数据只有一页数据报错
@@ -142,13 +139,22 @@
             //获得当前行 tr 的DOM对象
             var tr = obj.tr;
             var id = data.id;
-            if (layEvent === 'member_detail') {
+            if (layEvent === 'message_dell') {
                 //自定页
-                parent.layer.open({
-                    type: 2,
-                    skin: 'layui-layer-rim', //加上边框
-                    area: ['420px', '240px'], //宽高
-                    content: "/message_admin/member/get_member_detail/id/"+id,
+                message_tip = layer.confirm('是否删除该条留言', {
+                    btn: ['确定','取消'] //按钮
+                }, function(){
+                        layer.close(message_tip);
+                      $.post("{:url('message_admin/message/message_del')}",{'id':id},function(ret){
+                          layer.msg(ret.msg);
+                          if(ret.code == 1){
+                            window.location.reload()
+                          }else{
+
+                          }
+                      })  
+                }, function(){
+                
                 });
                 
             }
