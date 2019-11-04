@@ -14,10 +14,33 @@ use think\Controller;
 
 class Base extends Controller
 {
+
+    protected $admin_model;
+
     public function _initialize()
     {
+        $this->admin_model = model('Admin');
+        //用户是否登录
+        $this->is_login();
+        
+    }
+
+    /**
+     * 判断用户登录数据
+     *
+     * @return boolean
+     */
+    public function is_login(){
         //判断登录
-        if (empty(session('username'))) {
+        if (empty(session('username'))||empty(session('password'))) {
+            $loginUrl = url('login/index');
+            $this->error('请登录', $loginUrl);
+        }
+        $username = session('username');
+        $password = session('password');
+        //判断session用户名密码与数据库是否吻合
+        $is_admin = $this->admin_model->get_all_count(['username'=>$username,'password'=>$password]);
+        if(!$is_admin){
             $loginUrl = url('login/index');
             $this->error('请登录', $loginUrl);
         }

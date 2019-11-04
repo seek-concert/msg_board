@@ -42,7 +42,7 @@ class Base extends Model
      * @param array $with
      * @return array|bool
      */
-    public function get_one_data($where, $order = '', $field = '*', $with = [])
+    public function get_one_data($where=[], $order = '', $field = '*', $with = [])
     {
         if(empty($with)) {
             $ret = $this->where($where)->order($order)->field($field)->find();
