@@ -88,7 +88,7 @@ class Auth extends Controller
      */
     protected function renderSuccess($msg = 'success', $data = [])
     {
-        return json_encode(renderJson(self::JSON_SUCCESS_STATUS, $msg, $data));
+        return renderJson(self::JSON_SUCCESS_STATUS, $msg, $data);
     }
 
     /**
@@ -99,6 +99,6 @@ class Auth extends Controller
      */
     protected function renderError($msg = 'error', $data = [])
     {
-        return json_encode(renderJson(self::JSON_ERROR_STATUS, $msg, $data));
+        return renderJson(self::JSON_ERROR_STATUS, $msg, $data);
     }
 }

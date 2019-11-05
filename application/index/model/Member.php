@@ -14,4 +14,16 @@ class Member extends Base
      //添加时间
      protected $createTime = 'inputtime';
 
+    /**
+     * 获取被留言人信息
+     * @param $member_id
+     * @return array|bool
+     */
+     public function get_member_info($member_id){
+         if(!$member_id){
+             return false;
+         }
+         return $this->get_one_data(['id'=>$member_id]);
+     }
+
 }

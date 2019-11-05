@@ -28,4 +28,40 @@ class MessageBoard extends Base
     public function sendMember(){
         return $this->hasOne('Member','id','send_member_id')->bind(['send_nickname'=>'nickname']);
     }
+
+    /**
+     * 获取留言条数
+     * @param $member_id
+     * @return bool|int
+     */
+    public function get_msg_count($member_id){
+        if(!$member_id){
+            return false;
+        }
+        return $this->get_all_count(['member_id'=>$member_id]);
+    }
+
+    /**
+     * 获取留言数据
+     * @param $member_id
+     * @return bool|int
+     */
+    public function get_msg_data($member_id){
+        if(!$member_id){
+            return false;
+        }
+        return $this->get_all_data(['member_id'=>$member_id]);
+    }
+
+    /**
+     * 添加留言数据
+     * @param $data
+     * @return bool|int
+     */
+    public function insert_msg($data){
+        if(!$data){
+            return false;
+        }
+        return $this->add_data($data);
+    }
 }
