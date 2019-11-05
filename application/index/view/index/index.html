@@ -281,7 +281,7 @@
         <!-- 结束支付弹框 -->
         <!-- 留言弹幕 -->
         <div id="mid" style="display:flex; flex-direction:column; align-items:center; width:100%; height:400px;">
-            <div id="test" music="https://momoqn.looosen.cn/76627092" loop="True" autoplay="True" style="background-image:url(__STATIC__/index/img/67101018.png); background-repeat:no-repeat; background-size:cover; position:fixed; top:40px; left:650px; z-index:100; width:60px; height:60px;"></div>
+            <div id="test" music="{$setting_info['music']}" loop="True" autoplay="True" style="background-image:url(__STATIC__/index/img/67101018.png); background-repeat:no-repeat; background-size:cover; position:fixed; top:40px; left:650px; z-index:100; width:60px; height:60px;"></div>
             <label  style="margin:30px; border:solid 0px; font-size:35px; white-space:nowrap; background-color:#fbf7f7; height:50px; border-radius:25px; padding:0px 50px 5px 20px; opacity:0.6; animation:fadeout 10s 0s linear running infinite both; animation-duration:9s; position:absolute; top:400px; left:100px;">最近过得怎么样<img id="b" src="__STATIC__/index/img/5a72f13fc9a7a10d574735523b7c6973.png" style="left:-8px; float:left;margin-top:2px;width:46px; height:46px;border-radius: 46px;"/></label>
             <label  style="margin:30px; border:solid 0px; font-size:35px; white-space:nowrap; background-color:#fbf7f7; height:50px; border-radius:25px; padding:0px 50px 5px 20px; opacity:0.6; animation:fadeout 10s 0s linear running infinite both; animation-duration:9s; position:absolute; top:455px; left:50px;">猜猜我是谁<img id="b" src="__STATIC__/index/img/5a72f13fc9a7a10d574735523b7c6973.png" style="left:-8px; float:left;margin-top:2px;width:46px; height:46px;border-radius: 46px;"/></label>
             <label  style="margin:30px; border:solid 0px; font-size:35px; white-space:nowrap; background-color:#fbf7f7; height:50px; border-radius:25px; padding:0px 50px 5px 20px; opacity:0.6; animation:fadeout 10s 0s linear running infinite both; animation-duration:9s; position:absolute; top:700px; left:0px;">猜猜我是谁2<img id="b" src="__STATIC__/index/img/5a72f13fc9a7a10d574735523b7c6973.png" style="left:-8px; float:left;margin-top:2px;width:46px; height:46px;border-radius: 46px;"/></label>
@@ -456,11 +456,11 @@
     ;(function() {
         var div = $("#test");
         var musicPlayer = new Audio();
-        musicPlayer.src = 'http://www.170mv.com/kw/antiserver.kuwo.cn/anti.s?rid=MUSIC_53649256&response=res&format=mp3|aac&type=convert_url&br=128kmp3&agent=iPhone&callback=getlink&jpcallback=getlink.mp3';
+        musicPlayer.src = '{$setting_info[\'music\']}';
         musicPlayer.loop = 'loop';
         var playMusic = function() {
             div.css("animation", "musicRotate 3s infinite linear");
-            // musicPlayer.load();
+            musicPlayer.load();
             musicPlayer.play();
         }
         var pauseMusic = function() {
