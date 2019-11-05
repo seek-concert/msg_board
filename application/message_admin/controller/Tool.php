@@ -38,7 +38,7 @@ class Tool extends Base
             // 移动到框架应用根目录/public/uploads/ 目录下
             $info = $file->rule('uniqid')->move(ROOT_PATH . 'public' . DS . 'static'. DS .'upload','backgroundmusic.mp3');
             if($info){
-                $this->success($name = $file->getInfo()['name'],'', $_SERVER['SERVER_NAME'].'/static/upload/'.$info->getFilename());
+                $this->success($name = $file->getInfo()['name'],'', 'static/upload/'.$info->getFilename());
             }else{
                 // 上传失败获取错误信息
                 echo $file->getError();
