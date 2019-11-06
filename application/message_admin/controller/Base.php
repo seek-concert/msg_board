@@ -46,4 +46,16 @@ class Base extends Controller
         }
     }
 
+    /**
+     * 退出登录
+     *
+     * @return void
+     */
+    public function out_login(){
+        session('username',null);
+        session('password',null);
+        session('id',null);
+        echo  "<javascript>parent.location.reload();</javascript>";
+        //$this->success();
+    }
 }
