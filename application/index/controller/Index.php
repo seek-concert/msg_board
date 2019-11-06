@@ -62,8 +62,38 @@ class Index extends Auth
         }
         $data['setting_info'] = $new_set_arr;
         /* +++++++++[获取快捷留言标签]+++++++++ */
-
+        $quick_message_info = $this->quick_message_model->get_label(1);
+        $new_msg_arr = [];
+        if(!empty($quick_message_info)&&is_array($quick_message_info)){
+            foreach ($quick_message_info as $k=>$v){
+                $new_msg_arr[$k] = $v['message'];
+            }
+        }
+        $data['quick_message_info'] = $new_msg_arr;
         return view('',$data);
+    }
+
+    /**
+     * 获取标签
+     * @return array
+     */
+    public function switch_label(){
+        $page = input('page',1);
+        $this->quick_message_model = model('QuickMessage');
+        $ret = $this->quick_message_model->get_label($page);
+        $new_msg_arr = [];
+        if(!empty($ret)&&is_array($ret)){
+            $new_msg_arr['page'] = $ret['page'];
+            unset($ret['page']);
+            foreach ($ret as $k=>$v){
+                $new_msg_arr['msgs'][$k] = $v['message'];
+            }
+        }
+        if($new_msg_arr){
+            return $this->renderSuccess('获取成功',$new_msg_arr);
+        }else{
+            return $this->renderError('获取失败',[]);
+        }
     }
 
     /**
