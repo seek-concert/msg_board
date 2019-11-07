@@ -34,10 +34,9 @@ class Index extends Auth
     public function index()
     {
         $data = [];
-        $id = 2;//XXX
-//        $id = input('id');
+        $id = input('id');
         if(!$id){
-            die('非法访问');
+            $id = $this->user_info['id'];
         }
         $data['user_id'] = $id;
         /* +++++++++[初始化模型]+++++++++ */
@@ -103,13 +102,38 @@ class Index extends Auth
     public function insert_msg_data()
     {
         $data = input('');
+        if(!$data){
+            die('非法访问');
+        }
         $this->message_board_model = model('MessageBoard');
-//        $data['send_member_id'] = $this->user_info['id'];
+        $data['send_member_id'] = $this->user_info['id'];
         $ret = $this->message_board_model->insert_msg($data);
         if($ret){
             return $this->renderSuccess('留言成功',[]);
         }else{
             return $this->renderError('留言失败',[]);
         }
+    }
+
+    /**
+     * 留言详情管理
+     * @return \think\response\View
+     */
+    public function msg_detail(){
+        $data = [];
+        $id = $this->user_info['id'];
+        if(!$id){
+            die('非法访问');
+        }
+        $data['user_id'] = $id;
+        /* +++++++++[初始化模型]+++++++++ */
+        $this->member_model = model('Member');
+        $this->message_board_model = model('MessageBoard');
+        /* +++++++++[获取用户信息及获取留言]+++++++++ */
+        $member_info = $this->member_model->get_member_info($id);
+        $data['member_info'] = $member_info;
+        $get_msg_data = $this->message_board_model->get_msg_data($id);
+        $data['get_msg_data'] = $get_msg_data?:[];
+        return view();
     }
 }

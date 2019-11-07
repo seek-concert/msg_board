@@ -3,11 +3,8 @@
 <head>
     <meta charset='utf-8'>
     <title>对我说句真心话吧。</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" /><script type="text/javascript" src="//res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
-    <script type="text/javascript">
-        WXCONFIG = {"debug": false, "appId": "wxc56c6cb69c9a75c4xxx", "timestamp": 1572676673, "nonceStr": "b9fY0uI75ttRFjb2", "signature": "7815258508b79e613c3ac295101bd8bbbf73ac8e", "jsApiList": ["onMenuShareTimeline", "updateAppMessageShareData", "updateTimelineShareData", "onMenuShareAppMessage", "onMenuShareQQ", "onMenuShareWeibo", "onMenuShareQZone", "startRecord", "stopRecord", "onVoiceRecordEnd", "playVoice", "pauseVoice", "stopVoice", "onVoicePlayEnd", "uploadVoice", "downloadVoice", "chooseImage", "previewImage", "uploadImage", "downloadImage", "translateVoice", "getNetworkType", "openLocation", "getLocation", "hideOptionMenu", "showOptionMenu", "hideMenuItems", "showMenuItems", "hideAllNonBaseMenuItem", "showAllNonBaseMenuItem", "closeWindow", "scanQRCode", "chooseWXPay", "openProductSpecificView", "addCard", "chooseCard", "openCard"]};
-        wx.config(WXCONFIG)
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script type="text/javascript" src="//res2.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
     <script src="__STATIC__/index/js/jquery331.min.js" type="text/javascript"></script>
     <script src="__STATIC__/index/js/common.js?v=1" type="text/javascript"></script>
     <style type="text/css">
@@ -282,14 +279,26 @@
         <!-- 留言弹幕 -->
         <div id="mid" style="display:flex; flex-direction:column; align-items:center; width:100%; height:400px;">
             <div id="test" music="{$setting_info['music']}" loop="True" autoplay="True" style="background-image:url(__STATIC__/index/img/67101018.png); background-repeat:no-repeat; background-size:cover; position:fixed; top:40px; left:650px; z-index:100; width:60px; height:60px;"></div>
-            {foreach $get_msg_data as $k=>$v}
-            {php}
+            {if isset($get_msg_data)&&$member_info['is_pay']==1}
+                {foreach $get_msg_data as $k=>$v}
+                {php}
                 $left_rand = mt_rand(0,100);
                 $top_rand = mt_rand(0,5);
                 $top = 400+$top_rand*55;
-            {/php}
-            <label  style="margin:30px; border:solid 0px; font-size:35px; white-space:nowrap; background-color:#fbf7f7; height:50px; border-radius:25px; padding:0px 50px 5px 20px; opacity:0.6; animation:fadeout {:mt_rand(7,10)}s 0s linear running infinite both; animation-duration:{:mt_rand(7,9)}s; position:absolute; top:{$top}px; left:{$left_rand}px;"><img id="b" src="__STATIC__/index/img/5a72f13fc9a7a10d574735523b7c6973.png" style="left:-8px; float:left;margin-top:2px;width:46px; height:46px;border-radius: 46px;"/>{$v['message']}</label>
-            {/foreach}
+                {/php}
+                <label  style="margin:30px; border:solid 0px; font-size:35px; white-space:nowrap; background-color:#fbf7f7; height:50px; border-radius:25px; padding:0px 50px 5px 20px; opacity:0.6; animation:fadeout {:mt_rand(7,10)}s 0s linear running infinite both; animation-duration:{:mt_rand(7,9)}s; position:absolute; top:{$top}px; left:{$left_rand}px;"><img id="b" src="{$v['send_avatar']}" style="left:-8px; float:left;margin-top:2px;width:46px; height:46px;border-radius: 46px;"/>{$v['send_nickname']}:{$v['message']}</label>
+                {/foreach}
+            {else/}
+                {foreach $get_msg_data as $k=>$v}
+                {php}
+                $left_rand = mt_rand(0,100);
+                $top_rand = mt_rand(0,5);
+                $top = 400+$top_rand*55;
+                {/php}
+                <label  style="margin:30px; border:solid 0px; font-size:35px; white-space:nowrap; background-color:#fbf7f7; height:50px; border-radius:25px; padding:0px 50px 5px 20px; opacity:0.6; animation:fadeout {:mt_rand(7,10)}s 0s linear running infinite both; animation-duration:{:mt_rand(7,9)}s; position:absolute; top:{$top}px; left:{$left_rand}px;"><img id="b" src="__STATIC__/index/img/5a72f13fc9a7a10d574735523b7c6973.png" style="left:-8px; float:left;margin-top:2px;width:46px; height:46px;border-radius: 46px;"/>{$v['message']}</label>
+                {/foreach}
+            {/if}
+
         </div>
        <!-- 结束留言弹幕 -->
 
@@ -616,38 +625,36 @@
         window.Music['test'].play();
     });
     __READY_CALL(function(){
-        var link = "http://quietoy.wzhybj.com/index.php?oid=o6V6M1NN9HUeM1X2g4O7ICDVG74A";
-        if(!link.match(/^http(s)?\:\/\//g)) {
-            if(link.startsWith('/')) {
-                link = location.origin + link;
-            } else {
-                link = location.origin + location.pathname.replace(/[^\/]*$/g, '') + link;
-            }
-        }
-        wx.onMenuShareAppMessage({
-            "title": "对我说句真心话吧。",
-            "desc": "没事，你说了我也不知道是谁说的~",
-            "link": link,
-            "imgUrl": "{$member_info['avatar']}",
-            "success": function() {
-                // clickCall('/momarket/share/api', {"type": "sapp"});
-                $('#popup').css('display', 'none');
-            }
-        });
-        wx.onMenuShareTimeline({
-            "title": "对我说句真心话吧。",
-            "link": link,
-            "imgUrl": "{$member_info['avatar']}",
-            "success": function() {
-                //  clickCall('/momarket/share/api', {"type": "tline"});
-                $('#popup').css('display', 'none');
-            }
-        });
-        /*if(wx.miniProgram) {
-            wx.miniProgram.postMessage({ data: { shareInfo: {"title": "对我说句匿名悄悄话吧", "desc": "没事，你说了我也不知道是谁说的~", "link": "http://http://quietoy.wzhybj.com/520plus/index.php?oid=jE7z788q7DTQ9YzD2_mAAennNq1CxPFSUwCOxfI1dI4%3D", "imgUrl": "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKQMnKMT5wzaIae110wXPicvR86GrweqVnBEUwfsAbjNJPBFKRRRVibzQoHVtsUTpUdIq5XWHKfQOmQ/132"} } });
-        }*/
+
+        var sign_url = window.location.href;
+        $.post("{:url('index/agetsign/getSignPackage')}",{'url':sign_url},function(ret){
+            wx.config({
+                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                appId: ret.appId, // 必填，公众号的唯一标识
+                timestamp: ret.timestamp, // 必填，生成签名的时间戳
+                nonceStr: ret.nonceStr, // 必填，生成签名的随机串
+                signature: ret.signature,// 必填，签名
+                jsApiList: ['updateAppMessageShareData','updateTimelineShareData'] // 必填，需要使用的JS接口列表
+            });
+            wx.ready(function(){   //需在用户可能点击分享按钮前就先调用
+                wx.updateAppMessageShareData({
+                    title: '低价买电脑，就上乐校帮', // 分享标题
+                    desc: '乐校帮平台，集驾校、电商为一体的平台，赶紧来关注我们吧', // 分享描述
+                    link: 'https://wechat.leschool.cn', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: 'https://wechat.leschool.cn/__STATIC__/index/img/logo.png', // 分享图标
+                })
+
+            });
+            wx.ready(function(){
+                wx.updateTimelineShareData({
+                    title: '低价买电脑，就上乐校', // 分享标题
+                    link: '乐校帮平台，集驾校、电商为一体的平台，赶紧来关注我们吧',
+                    imgUrl: 'https://wechat.leschool.cn/__STATIC__/index/img/logo.png', // 分享图标
+                })
+            })
+        })
     });
-    $('*[tag=1]').css('display', 'block')
+    $('*[tag=1]').css('display', 'block');
 </script>
 </body>
 </html>

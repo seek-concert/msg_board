@@ -15,49 +15,49 @@ class Auth extends Controller
     public $user_info;
     public function _initialize()
     {
-//        $wx_info=$this->getuserinfo();
-//        if(session('remember_url')){
-//            $url=session('remember_url');
-//            session('remember_url',null);
-//            $this->redirect($url);
-//        }
-//        /* +++++++++获取用户信息+++++++++ */
-//        $openid=cookie('openid');
-//        if($openid){
-//            cookie('openid',$openid,3*24*60*60);
-//        }else{
-//            session('remember_url',request()->url());
-//            $this->redirect('Base/index');
-//        }
-//
-//        $model=new Member();
-//        $user_info=$model->where('open_id',$openid)->find();
-//        if(!$user_info){
-//            $data['open_id']=$openid;
-//            $data['nickname']=$wx_info['nickname'];
-//            $data['avatar']=$wx_info['headimgurl'];
-//            $data['login_at']=time();
-//            $data['login_ip']=request()->ip();
-//            $model->save($data);
-//            $user_info=$model;
-//
-//        }else{
-//            $data['nickname']=$wx_info['nickname'];
-//            $data['avatar']=$wx_info['headimgurl'];
-//            $data['login_at']=time();
-//            $data['login_ip']=request()->ip();
-//            $model->save($data,['open_id'=>$openid]);
-//        }
-//        cookie('userid',$user_info['id']);
-//        if(!session('openid')){
-//            $user_info->save($user_info->login_data(),['id',$user_info->id]);
-//            session('openid',$openid);
-//        }
-//        if(!session('wx_info')){
-//            session('wx_info',$wx_info);
-//        }
-//        $user_infos=$user_info->toArray();
-//        $this->user_info=array_merge($user_infos,session('wx_info'));
+        $wx_info=$this->getuserinfo();
+        if(session('remember_url')){
+            $url=session('remember_url');
+            session('remember_url',null);
+            $this->redirect($url);
+        }
+        /* +++++++++获取用户信息+++++++++ */
+        $openid=cookie('openid');
+        if($openid){
+            cookie('openid',$openid,3*24*60*60);
+        }else{
+            session('remember_url',request()->url());
+            $this->redirect('Base/index');
+        }
+
+        $model=new Member();
+        $user_info=$model->where('open_id',$openid)->find();
+        if(!$user_info){
+            $data['open_id']=$openid;
+            $data['nickname']=$wx_info['nickname'];
+            $data['avatar']=$wx_info['headimgurl'];
+            $data['login_at']=time();
+            $data['login_ip']=request()->ip();
+            $model->save($data);
+            $user_info=$model;
+
+        }else{
+            $data['nickname']=$wx_info['nickname'];
+            $data['avatar']=$wx_info['headimgurl'];
+            $data['login_at']=time();
+            $data['login_ip']=request()->ip();
+            $model->save($data,['open_id'=>$openid]);
+        }
+        cookie('userid',$user_info['id']);
+        if(!session('openid')){
+            $user_info->save($user_info->login_data(),['id',$user_info->id]);
+            session('openid',$openid);
+        }
+        if(!session('wx_info')){
+            session('wx_info',$wx_info);
+        }
+        $user_infos=$user_info->toArray();
+        $this->user_info=array_merge($user_infos,session('wx_info'));
     }
 
     /**
