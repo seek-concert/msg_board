@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="pay-status"></div>
+<script type="text/javascript">
+    //调用微信JS api 支付
+    function jsApiCall()
+    {
+        WeixinJSBridge.invoke('getBrandWCPayRequest', {$jsApiParameters}, function(res){
+//            WeixinJSBridge.log(res.err_msg);
+//            alert(res.err_code+res.err_desc+res.err_msg);
+                if(res.err_msg == "get_brand_wcpay_request:ok"){
+                    var btn=$('#btn-paynow');
+                    var btn_box=btn.parent();
+                    var btn_back='<a class="zhifu_btn f18 color_w" href="/">返回首页</a>';
+                    btn.remove();
+                    btn_box.append(btn_back);
+                    $('#pay-status').html('支付成功');
+                }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
+                    $('#pay-status').html('取消支付');
+                }else{
+                    $('#pay-status').html('支付失败');
+                }
+            }
+        );
+    }
+    function callpay()
+    {
+        if (typeof WeixinJSBridge == "undefined"){
+            if( document.addEventListener ){
+                document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+            }else if (document.attachEvent){
+                document.attachEvent('WeixinJSBridgeReady', jsApiCall);
+                document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+            }
+        }else{
+            jsApiCall();
+        }
+    }
+    callpay();
+</script>
+</body>
+</html>
