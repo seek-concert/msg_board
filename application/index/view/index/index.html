@@ -645,8 +645,8 @@
                     desc: '你~，有什么想对我说的吗？我在这里等你好久了', // 分享描述
                     link: sign_url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                     imgUrl: avatar, // 分享图标
-                    success: function () {
-                        console.log('dads');
+                    success: function (res) {
+                        console.log(res);
                         //$.post("{:url('index/index/share')}",{},function(){
 
                         //})
@@ -659,8 +659,8 @@
                     title: 'Hi,有什么想对我说的吗?', // 分享标题
                     link: sign_url,
                     imgUrl: avatar, // 分享图标
-                    success: function () {
-                        console.log('dad');
+                    success: function (res) {
+                        console.log(res);
                         //$.post("{:url('index/index/share')}",{},function(){
                             
                         //})
