@@ -575,6 +575,7 @@
         $("#close1").show();
         $("#ad").show();
         $("#ad").css('z-index','9999');
+        wechat_share();
     };
     $('.mask1').click(function(event){
         $('.p-qrcode').hide();
@@ -627,46 +628,49 @@
     __READY_CALL(function(){
         window.Music['test'].play();
     });
-    var ua = navigator.userAgent.toLowerCase();
-    console.log(ua);
-        var avatar = "{$member_info['avatar']}";
-        var sign_url = window.location.href;
-        $.post("{:url('index/agetsign/getSignPackage')}",{'url':sign_url},function(ret){
-            wx.config({
-                debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-                appId: ret.appId, // 必填，公众号的唯一标识
-                timestamp: ret.timestamp, // 必填，生成签名的时间戳
-                nonceStr: ret.nonceStr, // 必填，生成签名的随机串
-                signature: ret.signature,// 必填，签名
-                jsApiList: ['updateAppMessageShareData','updateTimelineShareData'] // 必填，需要使用的JS接口列表
-            });
-            wx.ready(function(){   //需在用户可能点击分享按钮前就先调用
-                wx.updateAppMessageShareData({
-                    title: 'Hi,有什么想对我说的吗?', // 分享标题
-                    desc: '你~，有什么想对我说的吗？我在这里等你好久了', // 分享描述
-                    link: sign_url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                    imgUrl: avatar, // 分享图标
-                    success: function (res) {
-                        //$.post("{:url('index/index/share')}",{},function(){
+ 
+        function wechat_share(){
+            var avatar = "{$member_info['avatar']}";
+            var sign_url = window.location.href;
+            $.post("{:url('index/agetsign/getSignPackage')}",{'url':sign_url},function(ret){
+                wx.config({
+                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                    appId: ret.appId, // 必填，公众号的唯一标识
+                    timestamp: ret.timestamp, // 必填，生成签名的时间戳
+                    nonceStr: ret.nonceStr, // 必填，生成签名的随机串
+                    signature: ret.signature,// 必填，签名
+                    jsApiList: ['updateAppMessageShareData','updateTimelineShareData'] // 必填，需要使用的JS接口列表
+                });
+                wx.ready(function(){   //需在用户可能点击分享按钮前就先调用
+                    wx.updateAppMessageShareData({
+                        title: 'Hi,有什么想对我说的吗?', // 分享标题
+                        desc: '你~，有什么想对我说的吗？我在这里等你好久了', // 分享描述
+                        link: sign_url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        imgUrl: avatar, // 分享图标
+                        success: function (res) {
+                            //$.post("{:url('index/index/share')}",{},function(){
 
-                        //})
-                    }
-                })
+                            //})
+                        }
+                    })
 
-            });
-            wx.ready(function(){
-                wx.updateTimelineShareData({
-                    title: 'Hi,有什么想对我说的吗?', // 分享标题
-                    link: sign_url,
-                    imgUrl: avatar, // 分享图标
-                    success: function (res) {
-                        //$.post("{:url('index/index/share')}",{},function(){
-                            
-                        //})
-                    }
+                });
+                wx.ready(function(){
+                    wx.updateTimelineShareData({
+                        title: 'Hi,有什么想对我说的吗?', // 分享标题
+                        link: sign_url,
+                        imgUrl: avatar, // 分享图标
+                        success: function (res) {
+                            //$.post("{:url('index/index/share')}",{},function(){
+                                
+                            //})
+                        }
+                    })
                 })
             })
-        })
+        }
+
+        
 
         
     $('*[tag=1]').css('display', 'block');
