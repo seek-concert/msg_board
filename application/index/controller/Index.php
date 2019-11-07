@@ -126,8 +126,7 @@ class Index extends Auth
             die('非法访问');
         }
         $this->message_board_model = model('MessageBoard');
-        $where['send_member_id'] = $data['send_id'];
-        $where['member_id'] = $this->user_info['id'];
+        $where['id'] = $data['send_id'];
         $ret = $this->message_board_model->del_msg($where);
         if($ret){
             return $this->renderSuccess('删除成功',[]);
