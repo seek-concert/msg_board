@@ -6,7 +6,7 @@ use app\common\model\Base;
  * Class Setting
  * @package app\index\model
  */
-class Setting extends Base
+class Share extends Base
 {
     //开启自动写入时间
     protected $autoWriteTimestamp = true;

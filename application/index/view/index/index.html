@@ -623,7 +623,7 @@
     __READY_CALL(function(){
         window.Music['test'].play();
     });
-    
+    __DO_READY(function(){
         var avatar = "{$member_info['avatar']}";
         var sign_url = window.location.href;
         $.post("{:url('index/agetsign/getSignPackage')}",{'url':sign_url},function(ret){
@@ -642,7 +642,9 @@
                     link: sign_url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                     imgUrl: avatar, // 分享图标
                     success: function () {
-                        $.post("{:url('index/share')}")
+                        $.post("{:url('index/index/share')}",{},function(){
+
+                        })
                     }
                 })
 
@@ -653,12 +655,16 @@
                     link: sign_url,
                     imgUrl: avatar, // 分享图标
                     success: function () {
-                        $.post("{:url('index/share')}")
+                        $.post("{:url('index/index/share')}",{},function(){
+                            
+                        })
                     }
                 })
             })
         })
 
+    })
+        
     $('*[tag=1]').css('display', 'block');
 </script>
 </body>
