@@ -134,7 +134,7 @@ class Index extends Auth
         $data['member_info'] = $member_info;
         $get_msg_data = $this->message_board_model->get_msg_data($id);
         $data['get_msg_data'] = $get_msg_data?:[];
-        return view();
+        return view('',$data);
     }
 
     /**
