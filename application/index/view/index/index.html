@@ -148,7 +148,7 @@
         <!-- 个人资料 -->
         <div  style="width:100%;height:400px;text-align:center;">
             <div><img src="{$member_info['avatar']}" style="margin:60px 0px 0px 0px; border-radius:360px; border-color:black;"/></div>
-            <div  style="margin:10px 0px 0px 0px; font-size:32px; font-weight:450; color:white; ">觅树知音</div>
+            <div  style="margin:10px 0px 0px 0px; font-size:32px; font-weight:450; color:white; ">{$member_info['nickname']}</div>
             <div  style="margin:10px 0px 0px 0px; font-size:32px; font-weight:800; color:white; ">『已收到了{$get_msg_count}个真心话』</div>
         </div>
         <!-- 结束个人资料 -->
@@ -286,7 +286,7 @@
                 $top_rand = mt_rand(0,5);
                 $top = 400+$top_rand*55;
                 {/php}
-                <label  style="margin:30px; border:solid 0px; font-size:35px; white-space:nowrap; background-color:#fbf7f7; height:50px; border-radius:25px; padding:0px 50px 5px 20px; opacity:0.6; animation:fadeout {:mt_rand(7,10)}s 0s linear running infinite both; animation-duration:{:mt_rand(7,9)}s; position:absolute; top:{$top}px; left:{$left_rand}px;"><img id="b" src="{$v['send_avatar']}" style="left:-8px; float:left;margin-top:2px;width:46px; height:46px;border-radius: 46px;"/>{$v['send_nickname']}:{$v['message']}</label>
+                <label  style="margin:30px; border:solid 0px; font-size:35px; white-space:nowrap; background-color:#fbf7f7; height:50px; border-radius:25px; padding:0px 50px 5px 20px; opacity:0.6; animation:fadeout {:mt_rand(7,10)}s 0s linear running infinite both; animation-duration:{:mt_rand(7,9)}s; position:absolute; top:{$top}px; left:{$left_rand}px;"><img id="b" src="{$v['send_avatar']}" style="left:-8px; float:left;margin-top:2px;width:46px; height:46px;border-radius: 46px;"/>{$v['send_nickname']}:<span style="padding-top: 5px">{$v['message']}</span></label>
                 {/foreach}
             {else/}
                 {foreach $get_msg_data as $k=>$v}
@@ -295,7 +295,7 @@
                 $top_rand = mt_rand(0,5);
                 $top = 400+$top_rand*55;
                 {/php}
-                <label  style="margin:30px; border:solid 0px; font-size:35px; white-space:nowrap; background-color:#fbf7f7; height:50px; border-radius:25px; padding:0px 50px 5px 20px; opacity:0.6; animation:fadeout {:mt_rand(7,10)}s 0s linear running infinite both; animation-duration:{:mt_rand(7,9)}s; position:absolute; top:{$top}px; left:{$left_rand}px;"><img id="b" src="__STATIC__/index/img/5a72f13fc9a7a10d574735523b7c6973.png" style="left:-8px; float:left;margin-top:2px;width:46px; height:46px;border-radius: 46px;"/>{$v['message']}</label>
+                <label  style="margin:30px; border:solid 0px; font-size:35px; white-space:nowrap; background-color:#fbf7f7; height:50px; border-radius:25px; padding:0px 50px 5px 20px; opacity:0.6; animation:fadeout {:mt_rand(7,10)}s 0s linear running infinite both; animation-duration:{:mt_rand(7,9)}s; position:absolute; top:{$top}px; left:{$left_rand}px;"><img id="b" src="__STATIC__/index/img/5a72f13fc9a7a10d574735523b7c6973.png" style="left:-8px; float:left;margin-top:2px;width:46px; height:46px;border-radius: 46px;"/><span style="padding-top: 5px">{$v['message']}</span></label>
                 {/foreach}
             {/if}
 
@@ -462,8 +462,7 @@
     }
     /* 支付 */
     $("#sendpay").click(function(){
-        // window.location.href='http://m.bifeng88.com/pay/unlocked4/id/1218881/pid/1';
-        alert('支付');
+        window.location.href='{:url('lxbpay/paying')}';
     });
 
     function getCookie(name)
