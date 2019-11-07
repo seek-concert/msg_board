@@ -136,4 +136,16 @@ class Index extends Auth
         $data['get_msg_data'] = $get_msg_data?:[];
         return view();
     }
+
+    /**
+     * 分享记录
+     *
+     * @return void
+     */
+    public function share(){
+        $id = $this->user_info['id'];
+        $share_sql = [];
+        $share_sql['member_id'] = $id;
+        $ret = model('Share')->add_data($share_sql);
+    }
 }
