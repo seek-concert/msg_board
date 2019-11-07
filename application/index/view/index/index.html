@@ -624,8 +624,8 @@
     __READY_CALL(function(){
         window.Music['test'].play();
     });
-    __READY_CALL(function(){
-
+    
+        var avatar = "{$member_info['avatar']}";
         var sign_url = window.location.href;
         $.post("{:url('index/agetsign/getSignPackage')}",{'url':sign_url},function(ret){
             wx.config({
@@ -638,22 +638,28 @@
             });
             wx.ready(function(){   //需在用户可能点击分享按钮前就先调用
                 wx.updateAppMessageShareData({
-                    title: '低价买电脑，就上乐校帮', // 分享标题
-                    desc: '乐校帮平台，集驾校、电商为一体的平台，赶紧来关注我们吧', // 分享描述
-                    link: 'https://wechat.leschool.cn', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                    imgUrl: 'https://wechat.leschool.cn/__STATIC__/index/img/logo.png', // 分享图标
+                    title: 'Hi,有什么想对我说的吗?', // 分享标题
+                    desc: '你~，有什么想对我说的吗？我在这里等你好久了', // 分享描述
+                    link: sign_url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                    imgUrl: avatar, // 分享图标
+                    success: function () {
+                        $.post("{:url('index/share')}")
+                    }
                 })
 
             });
             wx.ready(function(){
                 wx.updateTimelineShareData({
-                    title: '低价买电脑，就上乐校', // 分享标题
-                    link: '乐校帮平台，集驾校、电商为一体的平台，赶紧来关注我们吧',
-                    imgUrl: 'https://wechat.leschool.cn/__STATIC__/index/img/logo.png', // 分享图标
+                    title: 'Hi,有什么想对我说的吗?', // 分享标题
+                    link: sign_url,
+                    imgUrl: avatar, // 分享图标
+                    success: function () {
+                        $.post("{:url('index/share')}")
+                    }
                 })
             })
         })
-    });
+
     $('*[tag=1]').css('display', 'block');
 </script>
 </body>

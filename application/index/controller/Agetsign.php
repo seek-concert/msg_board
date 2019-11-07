@@ -8,6 +8,8 @@ class Agetsign extends Base {
     public function _initialize() {
 
      parent::_initialize();
+     $this->appId = 'wxe4f708db85c7f7c2';
+     $this->appSecret = '6306d6d81469297be7a7ba791c4bab4d';
     }
   
 public function getSignPackage() {
@@ -67,13 +69,14 @@ public function getSignPackage() {
     
   }
 
-  private function getAccessToken() {
+  public function getAccessToken() {
     // access_token 应该全局存储与更新，以下代码以写入到文件中做示例
     if(cache('access_token')){
         return cache('access_token');
     }else{
         $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$this->appId&secret=$this->appSecret";
         $res = json_decode($this->httpGet($url));
+        var_dump($res);
         $access_token = $res->access_token;
         cache('access_token',$access_token,3600);
           return $access_token;
