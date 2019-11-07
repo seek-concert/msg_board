@@ -309,7 +309,11 @@
             <button id="img" onclick="tj_msg()" style="padding:0px; border-radius:5px; background-color:#4368b8; color:#f9e8f5; border:1px solid #615e66; font-size:25px; width:100px; height:60px; position:absolute; top:850px; left:580px;">提交</button>
             {if $member_info['is_pay']==-1 && $id == $member_id}
             <button borderradius="10px" textalign="center" onclick="$('#gopay').show();" id="id139890710923976" style="font-size:35px; margin:30px 40px 20px 40px; box-shadow:-1px 15px 30px -12px black; background-color:#e8a24f; width:300px; height:80px; color:#FFFFFF; border:1px solid #e05d15; padding:0px 0px 6px 0px; border-radius:20px; position:absolute; top:1050px; left:0px;">偷看TA是谁</button>
-            {else/}
+            {/if}
+            {if $id != $member_id }
+            <button borderradius="10px" textalign="center" onclick="location.href='/' " id="id139890710923976" style="font-size:35px; margin:30px 40px 20px 40px; box-shadow:-1px 15px 30px -12px black; background-color:#e8a24f; width:300px; height:80px; color:#FFFFFF; border:1px solid #e05d15; padding:0px 0px 6px 0px; border-radius:20px; position:absolute; top:1050px; left:0px;">去我的留言板</button>
+            {/if}}
+            {if $member_info['is_pay'] == 1 && $id==$member_id}
             <button borderradius="10px" textalign="center" onclick="location.href='{:url('index/msg_detail')}'" id="id139890710923976" style="font-size:35px; margin:30px 40px 20px 40px; box-shadow:-1px 15px 30px -12px black; background-color:#e8a24f; width:300px; height:80px; color:#FFFFFF; border:1px solid #e05d15; padding:0px 0px 6px 0px; border-radius:20px; position:absolute; top:1050px; left:0px;">留言管理</button>
             {/if}
             <button borderradius="10px" textalign="center" onclick="testfetch({'arg': '测试参数'})" id="id139890710923808" style="padding:0px 0px 6px 0px; font-size:35px; margin:30px 40px 20px 40px; box-shadow:-1px 15px 30px -12px black; background-color:#e8a24f; width:300px; height:80px; color:#FFFFFF; border:1px solid #e05d15; animation:fadein1 1s 0s linear running infinite both; border-radius:20px; position:absolute; top:1050px; left:350px;">让好友来写</button>
