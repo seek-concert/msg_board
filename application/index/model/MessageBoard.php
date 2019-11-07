@@ -26,7 +26,7 @@ class MessageBoard extends Base
      * @return \think\model\relation\HasOne
      */
     public function sendMember(){
-        return $this->hasOne('Member','id','send_member_id')->bind(['send_nickname'=>'nickname']);
+        return $this->hasOne('Member','id','send_member_id')->bind(['send_avatar'=>'avatar','send_nickname'=>'nickname']);
     }
 
     /**
@@ -50,7 +50,7 @@ class MessageBoard extends Base
         if(!$member_id){
             return false;
         }
-        return $this->get_all_data(['member_id'=>$member_id]);
+        return $this->get_all_data(['member_id'=>$member_id],'','',['sendMember']);
     }
 
     /**

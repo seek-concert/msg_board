@@ -17,8 +17,8 @@ class Base extends Controller
 
     public function _initialize()
     {
-        $app_id='wx29a69becd248b17e';
-        $app_secret='2dd2332fe0737cda2134ee95c015a97f';
+        $app_id='wxe4f708db85c7f7c2';
+        $app_secret='6306d6d81469297be7a7ba791c4bab4d';
         $this->AppId = $app_id;
         $this->AppSecret = $app_secret;
     }
