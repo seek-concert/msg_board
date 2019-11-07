@@ -42,7 +42,7 @@ class Lxbpay extends Auth
         /* ++++++++++发起支付下单++++++++++ */
         /* ①、获取用户openid */
         $tools = new \JsApiPay();
-        $openId = $this->user_info['id'];
+        $openId = $this->user_info['open_id'];
         $orderno = $pay_datas['number'];
         $domain=request()->domain();
         /* ②、统一下单 */
@@ -56,7 +56,6 @@ class Lxbpay extends Auth
         $input->SetNotify_url($notify_url); /* 支付回调验证地址 */
         $input->SetTrade_type("JSAPI"); /* 支付类型 */
         $input->SetOpenid($openId); /* 用户openID */
-        $input->SetProfitSharing('Y'); /* 是否分账 */
         $order = \WxPayApi::unifiedOrder($input); /* 统一下单 */
         $jsApiParameters = $tools->GetJsApiParameters($order);
         //模板数据
