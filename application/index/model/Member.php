@@ -14,6 +14,16 @@ class Member extends Base
      //添加时间
      protected $createTime = 'inputtime';
 
+    //修改时间
+    protected $updateTime = 'update_time';
+
+    //登陆ip及登陆时间
+    public function login_data(){
+        $data['login_at']=time();
+        $data['login_ip']=request()->ip();
+        return $data;
+    }
+
     /**
      * 获取被留言人信息
      * @param $member_id
