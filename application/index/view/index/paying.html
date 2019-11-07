@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>留言板支付</title>
 </head>
 <body>
 <div id="pay-status"></div>
@@ -14,12 +14,8 @@
 //            WeixinJSBridge.log(res.err_msg);
 //            alert(res.err_code+res.err_desc+res.err_msg);
                 if(res.err_msg == "get_brand_wcpay_request:ok"){
-                    var btn=$('#btn-paynow');
-                    var btn_box=btn.parent();
-                    var btn_back='<a class="zhifu_btn f18 color_w" href="/">返回首页</a>';
-                    btn.remove();
-                    btn_box.append(btn_back);
                     $('#pay-status').html('支付成功');
+                    window.location.href='{:url('index')}';
                 }else if(res.err_msg == "get_brand_wcpay_request:cancel"){
                     $('#pay-status').html('取消支付');
                 }else{

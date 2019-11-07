@@ -17,10 +17,6 @@ Loader::import('WxPay.lib.WxPay#Notify');
 class Wxpaynotify extends \WxPayNotify
 {
 
-    public function __construct()
-    {
-
-    }
     public function index()
     {
         $this->Handle(true);
@@ -46,11 +42,6 @@ class Wxpaynotify extends \WxPayNotify
             $msg = "输入参数不正确";
             return false;
         }
-        //查询订单，判断订单真实性
-        if(!$this->Queryorder($data["transaction_id"])){
-            $msg = "订单查询失败";
-            return false;
-        }
         /*//获取服务器返回的数据
            $order_sn = $data['out_trade_no'];  //订单单号
            $order_id = $data['attach'];        //附加参数,选择传递订单ID
@@ -67,28 +58,12 @@ class Wxpaynotify extends \WxPayNotify
                 'status' => 1,
                 'pay_time' => time()
             ],['number'=>$data['out_trade_no']]);
+            model('Member')->update_data([
+                'is_pay' => 1
+            ],['id'=>$pay_info['member_id']]);
         }
+
        
     }
-
-
-    //查询订单
-    public function Queryorder($transaction_id)
-    {
-        $input = new \WxPayOrderQuery();
-        $input->SetTransaction_id($transaction_id);
-        $result = \WxPayApi::orderQuery($input);
-        if($result['mch_id'] != model('admin/WechatSetting')->get_one_value(['key'=>'wechat_pay_machid'],'value','key')){
-            return false;
-        }
-        if(array_key_exists("return_code", $result) && array_key_exists("result_code", $result) && $result["return_code"] == "SUCCESS" && $result["result_code"] == "SUCCESS")
-        {
-            return true;
-        }
-        return false;
-    }
-
-
-    
 
 }
