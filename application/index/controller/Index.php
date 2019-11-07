@@ -35,10 +35,13 @@ class Index extends Auth
     {
         $data = [];
         $id = input('id');
+        $member_id = $this->user_info['id'];
         if(!$id){
-            $id = $this->user_info['id'];
+            $id = $member_id;
         }
+       
         $data['user_id'] = $id;
+        $data['member_id'] = $member_id;
         /* +++++++++[初始化模型]+++++++++ */
         $this->member_model = model('Member');
         $this->setting_model = model('Setting');

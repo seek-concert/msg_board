@@ -176,35 +176,7 @@ function __DO_READY() {
     __BEREADY = true;
 }
 var ua = navigator.userAgent.toLowerCase();
-if(ua.match(/MicroMessenger/i) == "micromessenger") {
-    wx.ready(function() {
-        var title = document.title;
-        if(!title) {
-            title = location.host;
-        }
-        var imgUrl = $("img").attr('src');
-        wx.onMenuShareAppMessage({
-            "title": title,
-            "desc": document.body.innerText.substr(0, 20),
-            "link": location.href,
-            "imgUrl": imgUrl,
-            "success": function() {
-                clickCall('/momarket/share/api', {"type": "sapp"});
-            }
-        });
-        wx.onMenuShareTimeline({
-            "title": title,
-            "link": location.href,
-            "imgUrl": imgUrl,
-            "success": function() {
-                clickCall('/momarket/share/api', {"type": "tline"});
-            }
-        });
-        __DO_READY();
-    })
-} else {
-    window.addEventListener("load", __DO_READY, false);
-}
+
 
 function __fetch_ret(res) {
     res = __format_log(res);

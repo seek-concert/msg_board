@@ -307,7 +307,7 @@
             <div style="height:3px; width:60%; background:black; opacity:0.1; position:absolute; top:900px; left:100px;"></div>
 
             <button id="img" onclick="tj_msg()" style="padding:0px; border-radius:5px; background-color:#4368b8; color:#f9e8f5; border:1px solid #615e66; font-size:25px; width:100px; height:60px; position:absolute; top:850px; left:580px;">提交</button>
-            {if $member_info['is_pay']==-1}
+            {if $member_info['is_pay']==-1 && $id == $member_id}
             <button borderradius="10px" textalign="center" onclick="$('#gopay').show();" id="id139890710923976" style="font-size:35px; margin:30px 40px 20px 40px; box-shadow:-1px 15px 30px -12px black; background-color:#e8a24f; width:300px; height:80px; color:#FFFFFF; border:1px solid #e05d15; padding:0px 0px 6px 0px; border-radius:20px; position:absolute; top:1050px; left:0px;">偷看TA是谁</button>
             {else/}
             <button borderradius="10px" textalign="center" onclick="location.href='{:url('index/msg_detail')}'" id="id139890710923976" style="font-size:35px; margin:30px 40px 20px 40px; box-shadow:-1px 15px 30px -12px black; background-color:#e8a24f; width:300px; height:80px; color:#FFFFFF; border:1px solid #e05d15; padding:0px 0px 6px 0px; border-radius:20px; position:absolute; top:1050px; left:0px;">留言管理</button>
@@ -628,10 +628,12 @@
     __READY_CALL(function(){
         window.Music['test'].play();
     });
- 
+        var avatar = "{$member_info['avatar']}";
+            var sign_url = encodeURIComponent(location.href.split('#')[0]);
+           
+            var share_url = "http://"+window.location.host+"/?id={$member_id}"
         function wechat_share(){
-            var avatar = "{$member_info['avatar']}";
-            var sign_url = window.location.href;
+           
             $.post("{:url('index/agetsign/getSignPackage')}",{'url':sign_url},function(ret){
                 wx.config({
                     debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
@@ -645,7 +647,7 @@
                     wx.updateAppMessageShareData({
                         title: 'Hi,有什么想对我说的吗?', // 分享标题
                         desc: '你~，有什么想对我说的吗？我在这里等你好久了', // 分享描述
-                        link: sign_url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        link: share_url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                         imgUrl: avatar, // 分享图标
                         success: function (res) {
                             $.post("{:url('index/index/share')}",{},function(){
@@ -658,7 +660,7 @@
                 wx.ready(function(){
                     wx.updateTimelineShareData({
                         title: 'Hi,有什么想对我说的吗?', // 分享标题
-                        link: sign_url,
+                        link: share_url,
                         imgUrl: avatar, // 分享图标
                         success: function (res) {
                             $.post("{:url('index/index/share')}",{},function(){
@@ -670,7 +672,42 @@
             })
         }
 
-        
+        $.post("{:url('index/agetsign/getSignPackage')}",{'url':sign_url},function(ret){
+                wx.config({
+                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                    appId: ret.appId, // 必填，公众号的唯一标识
+                    timestamp: ret.timestamp, // 必填，生成签名的时间戳
+                    nonceStr: ret.nonceStr, // 必填，生成签名的随机串
+                    signature: ret.signature,// 必填，签名
+                    jsApiList: ['updateAppMessageShareData','updateTimelineShareData'] // 必填，需要使用的JS接口列表
+                });
+                wx.ready(function(){   //需在用户可能点击分享按钮前就先调用
+                    wx.updateAppMessageShareData({
+                        title: 'Hi,有什么想对我说的吗?', // 分享标题
+                        desc: '你~，有什么想对我说的吗？我在这里等你好久了', // 分享描述
+                        link: share_url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                        imgUrl: avatar, // 分享图标
+                        success: function (res) {
+                            $.post("{:url('index/index/share')}",{},function(){
+
+                            })
+                        }
+                    })
+
+                });
+                wx.ready(function(){
+                    wx.updateTimelineShareData({
+                        title: 'Hi,有什么想对我说的吗?', // 分享标题
+                        link: share_url,
+                        imgUrl: avatar, // 分享图标
+                        success: function (res) {
+                            $.post("{:url('index/index/share')}",{},function(){
+                                
+                            })
+                        }
+                    })
+                })
+            })
 
         
     $('*[tag=1]').css('display', 'block');
