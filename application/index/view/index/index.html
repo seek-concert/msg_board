@@ -627,7 +627,7 @@
     __READY_CALL(function(){
         window.Music['test'].play();
     });
-    __DO_READY(function(){
+ 
         var avatar = "{$member_info['avatar']}";
         var sign_url = window.location.href;
         $.post("{:url('index/agetsign/getSignPackage')}",{'url':sign_url},function(ret){
@@ -667,7 +667,7 @@
             })
         })
 
-    })
+   
         
     $('*[tag=1]').css('display', 'block');
 </script>
