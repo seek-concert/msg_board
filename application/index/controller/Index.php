@@ -116,6 +116,26 @@ class Index extends Auth
     }
 
     /**
+     * 删除留言
+     * @return array
+     */
+    public function del_msg_data()
+    {
+        $data = input('');
+        if(!$data){
+            die('非法访问');
+        }
+        $this->message_board_model = model('MessageBoard');
+        $where['send_member_id'] = $data['send_id'];
+        $ret = $this->message_board_model->del_msg($where);
+        if($ret){
+            return $this->renderSuccess('删除成功',[]);
+        }else{
+            return $this->renderError('删除失败',[]);
+        }
+    }
+
+    /**
      * 留言详情管理
      * @return \think\response\View
      */

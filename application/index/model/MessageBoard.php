@@ -64,4 +64,16 @@ class MessageBoard extends Base
         }
         return $this->add_data($data);
     }
+
+    /**
+     * 删除留言数据
+     * @param $where
+     * @return bool|int
+     */
+    public function del_msg($where){
+        if(!$where){
+            return false;
+        }
+        return $this->delete_data($where);
+    }
 }

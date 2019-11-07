@@ -136,7 +136,7 @@
                 <span  style="font-size:48px; font-weight:450; color:white; margin:60px 0px 0px 0px; padding-left:20px; padding-top:20px; padding-right:20px; padding-bottom:20px;">{$member_info['nickname']}收到的的真心话</span>
                 {foreach $get_msg_data as $k=>$v}
                 <label tag="-1" style="margin:10px; border:solid 0px; font-size:35px; white-space:nowrap; background-color:#fbf7f7; height:50px; border-radius:25px; padding:0px 5px 5px 20px; opacity:0.6;"><img  src="{$v['send_avatar']}" style="left:-8px; float:left; margin-top:2px; width:46px; height:46px;border-radius: 46px;"/>{$v['send_nickname']}:{$v['message']}
-                    <img src="__STATIC__/index/img/del.png" onclick="clickCall()" style="left:45px; float:right; margin:5px 10px 0px 40px; width:40px; height:40px;"/>
+                    <img src="__STATIC__/index/img/del.png" onclick="del_msg({$v['send_avatar']})" style="left:45px; float:right; margin:5px 10px 0px 40px; width:40px; height:40px;"/>
                 </label>
                 {/foreach}
             </div>
@@ -145,5 +145,30 @@
             <img id="close1" src="__STATIC__/index/img/76637265.jpg"  style="display:none; width:780px; height:1400px;"/>
             <img id="ad" src="__STATIC__/index/img/76614593.png"  style="display:none; position:absolute; top:0px; left:20px;"/></div>
         <div id="popup" style="display:none;"></div></div><script type='text/javascript' src='__STATIC__/index/js/pythonjs.min.js'></script>
+    <script>
+        function del_msg(obj) {
+
+            var datas = {
+                send_id:obj
+            };
+            $.ajax({
+                url:"{:url('del_msg_data')}",
+                data:datas,
+                type:'post',
+                dataType:'json',
+                success:function(ret) {
+                    if (ret.code == 1) {
+                        window.location.reload();
+                    } else {
+
+                    }
+                },
+                error:function(e) {
+                    alert('网络错误，请稍后再试');
+                }
+            });
+            return false;
+        }
+    </script>
 </body>
 </html>
