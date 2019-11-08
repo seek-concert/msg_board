@@ -13,7 +13,11 @@ use app\common\model\Base;
 
 class MessageBoard extends Base
 {
- 
+ //开启自动写入时间
+ protected $autoWriteTimestamp = true;
+    
+ //添加时间
+ protected $createTime = 'inputtime';
     /**
      * 关联用户表信息
      *

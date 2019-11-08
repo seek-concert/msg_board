@@ -48,6 +48,12 @@ class Setting extends Base
             $this->success('修改设置成功');
 
         }
-        return view();
+        $setting_info = $this->setting_model->get_all_data('','key desc');
+       $pay = $this->setting_model->get_one_value(['key'=>'pay'],'value','');
+       $music = $this->setting_model->get_one_value(['key'=>'music'],'value','');
+        $return_data = [];
+        $return_data['pay'] = $pay;
+        $return_data['music'] = $music;
+        return view('',$return_data);
     }
 }

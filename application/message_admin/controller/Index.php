@@ -54,7 +54,7 @@ class Index extends Base
         //总收益量
         $pay_sum = $this->pay_model->where(['status'=>1])->sum('num');
         //日收益
-        $today_pay_sum = $this->pay_model->where(['status'=>1,'inputtime'=>['between',[$start_time,$end_time]]])->sum('num');
+        $today_pay_sum = $this->pay_model->where(['status'=>1,'input_time'=>['between',[$start_time,$end_time]]])->sum('num');
 
         //总留言数量
         $message_count = $this->message_board->get_all_count();
@@ -100,13 +100,13 @@ class Index extends Base
         foreach ($yeararr as $key => $value) {
             //计算每月统计
             $timestamp = strtotime( $value );
-            $start_time = date( 'Y-m-1 00:00:00', $timestamp );
+            $start_time = strtotime(date( 'Y-m-1 00:00:00', $timestamp ));
             $mdays = date( 't', $timestamp );
-            $end_time = date( 'Y-m-' . $mdays . ' 23:59:59', $timestamp );
+            $end_time = strtotime(date( 'Y-m-' . $mdays . ' 23:59:59', $timestamp ));
             //用户增长
             $series[0]['data'][$key-1] = $this->member_model->get_all_count(['inputtime'=>['between',[$start_time,$end_time]]]);
             //效益增长
-            $series[1]['data'][$key-1] = $this->pay_model->where(['status'=>1,'inputtime'=>['between',[$start_time,$end_time]]])->sum('num');
+            $series[1]['data'][$key-1] = $this->pay_model->where(['status'=>1,'input_time'=>['between',[$start_time,$end_time]]])->sum('num');
 
         }
        $this->success('','',$series);
