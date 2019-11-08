@@ -23,7 +23,7 @@
 						<label class="layui-form-label">支付价格</label>
 						<div class="layui-input-inline">
 							<input type="text" name="pay" lay-verify="required|number" autocomplete="off"
-                                placeholder="请填写支付价格" class="layui-input"> 
+                                placeholder="请填写支付价格" class="layui-input" value="{$pay}"> 
                         </div>
                         <div class="layui-form-mid layui-word-aux">请填写需要查看头像时支付价格</div>
                     </div>
@@ -39,10 +39,9 @@
 						<div class="layui-input-inline">
 							<div class="layui-footer" style="left: 0;">
                                 <button class="layui-btn" lay-submit="" lay-filter="component-form-demo1">立即提交</button>
-                                <input type="hidden" name="music" id="music" value="">
+                                <input type="hidden" name="music" id="music" value="{$music}">
 							</div>
                         </div>
-                        <div class="layui-form-mid layui-word-aux music_tip">请填写需要查看头像时支付价格</div>
 					</div>
 				</form>
 			</div>

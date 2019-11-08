@@ -10,6 +10,12 @@
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="__STATIC__/admin/layui/css/layui.css" media="all">
     <link rel="stylesheet" href="__STATIC__/admin/style/admin.css" media="all">
+    <style>
+        .layui-table-cell{
+            height:50px;
+            line-height:50px;
+        }
+    </style>
 </head>
 
 <body>
@@ -71,7 +77,7 @@
         //第一个实例
         table.render({
             elem: '#member_lists',
-            height: 550,
+            height: 720,
             url: '{:url("get_member_lists")}', //数据接口
             where: {},
             page: true, //开启分页
@@ -94,7 +100,8 @@
                     {
                         field: 'avatar',
                         title: '用户头像',
-                        templet:'<div><img style="width: 50%;height: 100%" src="{{ d.avatar }}"></div>'
+                        templet:'<div><img style="width: 50px;height: 100%" src="{{ d.avatar }}"></div>',
+
                     },
                     {
                         field: 'nickname',

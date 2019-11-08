@@ -57,7 +57,7 @@ class Pay extends Base
         if(!empty($status)){
             $pay_sql['status'] = $status;
         }
-        $lists = $this->pay_model->get_all_data_page($pay_sql, $page, $limit, 'id desc', 'id,num,status,inputtime,member_id',['member']);
+        $lists = $this->pay_model->get_all_data_page($pay_sql, $page, $limit, 'id desc', 'id,num,status,input_time,member_id',['member']);
         $return_data = [];
         $return_data['code'] = 1;
         $return_data['count'] = $this->pay_model->get_all_count($pay_sql);
