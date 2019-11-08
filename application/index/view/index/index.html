@@ -617,7 +617,7 @@
         musicPlayer.loop = 'loop';
         var playMusic = function() {
             div.css("animation", "musicRotate 3s infinite linear");
-            musicPlayer.load();
+            // musicPlayer.load();
             musicPlayer.play();
         }
         var pauseMusic = function() {
@@ -638,7 +638,7 @@
                 musicPlayer.play();
             }
         }
-
+         switchMusic();
         div.on("click", switchMusic)
         if(!window.Music) {
             window.Music = {}
