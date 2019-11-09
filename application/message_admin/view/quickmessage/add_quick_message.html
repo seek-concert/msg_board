@@ -60,11 +60,26 @@
 			
 			/* 监听提交 */
 			form.on('submit(component-form-demo1)', function (data) {
-				$.post("{:url('add_quick_message')}",data.field,function(ret){
-					parent.layui.table.reload('quick_message_lists'); //重载表格
-					layer.msg(ret.msg);
-				})
+				// $.post("{:url('add_quick_message')}",data.field,function(ret){
+				// 	parent.layui.table.reload('quick_message_lists'); //重载表格
+				// 	layer.msg(ret.msg);
+				// })
+				$.ajax({
+					url: "{:url('add_quick_message')}",
+					data: data.field,
+					type: 'post',
+					dataType: 'json',
+					async: false,
+					success: function (ret) {
+						layer.msg(ret.msg);
+
+					},error:function (e) {
+
+					}
+				});
 			});
+
+
 		});
 	</script>
 </body>

@@ -46,13 +46,14 @@
 			base: '__STATIC__/admin/' //静态资源所在路径
 		}).extend({
 			index: 'lib/index' //主入口模块
-		}).use(['index', 'form', 'laydate'], function () {
+		}).use(['index', 'form','table' ,'laydate'], function () {
 			var $ = layui.$,
 				admin = layui.admin,
 				element = layui.element,
 				layer = layui.layer,
 				laydate = layui.laydate,
-				form = layui.form;
+				form = layui.form,
+			table = layui.table;
 			form.render(null, 'component-form-group');
 
 			laydate.render({
@@ -61,9 +62,22 @@
 
 			/* 监听提交 */
 			form.on('submit(component-form-demo1)', function (data) {
-				$.post("{:url('edit_quick_message')}",data.field,function(ret){
-					layer.msg(ret.msg);
-				})
+				/*$.post("{:url('edit_quick_message')}",data.field,function(ret){
+                layer.msg(ret.msg);
+            })*/
+				$.ajax({
+					url: "{:url('edit_quick_message')}",
+					data: data.field,
+					type: 'post',
+					dataType: 'json',
+					async: false,
+					success: function (ret) {
+						layer.msg(ret.msg);
+
+					},error:function (e) {
+
+					}
+				});
 			});
 		});
 	</script>
